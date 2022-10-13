@@ -1,4 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
+import Header from './components/Nav/Nav'
+import Nav from './components/Header/Header'
 
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 
@@ -29,6 +31,11 @@ export default function App() {
           setZoom(map.current.getZoom().toFixed(2));
         });
       });
+
+      <div className='App'>
+     <Header />
+     <Nav />
+     </div>
 
       return (
         <div>
