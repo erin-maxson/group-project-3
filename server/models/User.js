@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = new Schema(
     {
@@ -15,6 +16,8 @@ const userSchema = new Schema(
             type: String,
             required: true,
             unique: true,
+            // REGEX to set rules for emails
+            match: [/.+@.+\..+/, 'Must match an email address!'],
             validate: {
                 isEmail: true
             }
@@ -25,8 +28,21 @@ const userSchema = new Schema(
             min: 6
         }
     }
-)
+);
+// function to hash user password
+userSchema.pre('save', async function (next) {
+    if (this.isNew || this.isModified('password')) {
+      const saltRounds = 10;
+      this.password = await bcrypt.hash(this.password, saltRounds);
+    }
+  
+    next();
+  });
+// checking to see if it's correct password 
+  userSchema.methods.isCorrectPassword = async function (password) {
+    return bcrypt.compare(password, this.password);
+  };
 
-const User = model('user', userSchema);
+const User = model('User', userSchema);
 
 module.exports = User;
