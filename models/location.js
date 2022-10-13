@@ -8,8 +8,8 @@ const locationSchema = new Schema(
             unique: true,
             required: true,
             trim: true,
-            min:3,
-            max: 20,
+            min:2,
+            max: 25,
 
         },
         title: {
