@@ -40,13 +40,6 @@ const locationSchema = new Schema(
     }
 )
 
-const User = model('user', userSchema);
-
-module.exports = User;
-
-
-
-
 
 
 const Location = model('location', locationSchema);
