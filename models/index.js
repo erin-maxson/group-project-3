@@ -1,4 +1,4 @@
-const Location = require('./thought');
+const Location = require('./location');
 const User = require('./user');
 
 
