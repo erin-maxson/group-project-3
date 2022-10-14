@@ -6,8 +6,8 @@ import Map from './components/Map/Map'
 export default function App() {
     return (
       <div className='App'>
-     <Header />
-     <Nav />
+         <Nav />
+      <Header />
      <Map />
      </div>
       );

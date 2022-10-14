@@ -4,7 +4,7 @@ import LOGO from '../../assets/happycamperlogo.png'
 
 const Header = () => {
   return (
-    <div className='container.header_container'>
+    <div className='header'>
         <img src={LOGO} alt="happycamper logo" />
     </div>
   )
