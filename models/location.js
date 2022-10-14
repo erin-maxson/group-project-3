@@ -37,6 +37,7 @@ const locationSchema = new Schema(
             type: Number,
             require: true
         }
+        
     }
 )
 

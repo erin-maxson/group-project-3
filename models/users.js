@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose');
 
+const locationSchema = require('./location')
+
 const userSchema = new Schema(
     {
         username: {
@@ -23,7 +25,10 @@ const userSchema = new Schema(
             type: String,
             required: true,
             min: 6
-        }
+        },
+        savedLocation: [
+            locationSchema
+        ]
     }
 )
 
