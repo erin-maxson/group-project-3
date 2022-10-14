@@ -1,6 +1,45 @@
 const { gql } = require('apollo-server-express');
 
-const typeDefs =gql`
+const typeDefs = gql`
+
+
+
+   type User {
+      _id: ID
+      username: String
+      email: String
+      password: String
+      savedLocations: [Location]!
+   }
+
+   type Location {
+      _id: ID
+      username: String
+      title: String
+      description: String
+      rating: Int
+      latitude: Int
+      longitude: Int
+
+
+
+   }
+
+   type Auth {
+      token: ID!
+      user: User
+   }
+
+   type Query {
+      user: [User]
+      user(username: String!): User
+      savedLocations(username: String): [Location]
+      location(locationId: ID!): Location
+      me: User
+
+   }
+
+
  
  input SaveLocationInput {
     username: String!
