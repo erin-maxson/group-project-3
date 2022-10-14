@@ -8,6 +8,8 @@ const Signup = () => {
             <img src={logo} alt='small van logo' />
         </div>
 
+        <h2>Sign up</h2>
+
         <form action="">
             <p>Create your username</p>
             <input type="text" placeholder="username" />
@@ -15,7 +17,7 @@ const Signup = () => {
             <input type="email" placeholder="email" />
             <p>Create your password</p>
             <input type="password" placeholder="password" />
-            <button className='signupBtn'>Signup</button>
+            <button className='signupBtn'>Let's go!</button>
         </form>
 
     </div>
