@@ -16,7 +16,7 @@ const Map = () => {
               container: mapContainer.current,
               style: 'mapbox://styles/mapbox/outdoors-v11',
               center: [lng, lat],
-              zoom: zoom
+              zoom: 4
             });
           });
     
