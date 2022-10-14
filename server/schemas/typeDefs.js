@@ -21,8 +21,6 @@ const typeDefs = gql`
       latitude: Int
       longitude: Int
 
-
-
    }
 
    type Auth {
