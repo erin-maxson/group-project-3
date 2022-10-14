@@ -16,3 +16,24 @@ a {
     color: var(--color-bg);
 
 }
+
+a:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    text-decoration: underline;
+}
+
+/* TODO: MEDIA QUERIES */
+/* MEDIA QUERIES (MEDIUM DEVICES / TABLETS)
+@media screen and (max-width: 1024px) {
+    nav {
+       
+    }
+}
+
+/* MEDIA QUERIES (SMALL DEVICES / MOBILE) */
+/* @media screen and (max-width: 600px) {
+    nav {
+       
+    }
+} */ 
