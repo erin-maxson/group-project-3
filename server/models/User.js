@@ -26,7 +26,10 @@ const userSchema = new Schema(
             type: String,
             required: true,
             min: 6
-        }
+        },
+        savedLocation: [
+          locationSchema
+      ]
     }
 );
 // function to hash user password
