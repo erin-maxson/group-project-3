@@ -29,6 +29,27 @@ const Map = () => {
             });
           });
 
+          for (const marker of geojson.features) {
+            // Create a DOM element for each marker.
+            const el = document.createElement('div');
+            const width = '20'
+            const height = '20'
+            el.className = 'marker';
+            el.style.backgroundImage = `url(https://placekitten.com/g/${width}/${height}/)`;
+            el.style.width = `${width}px`;
+            el.style.height = `${height}px`;
+            el.style.backgroundSize = '100%';
+             
+            el.addEventListener('click', () => {
+            window.alert(marker.properties.message);
+            });
+             
+            // Add markers to the map.
+            new mapboxgl.Marker(el)
+            .setLngLat(marker.geometry.coordinates)
+            .addTo(map);
+            }
+
           return (
             <div>
               <div ref={mapContainer} className="map-container" />
