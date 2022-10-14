@@ -6,6 +6,9 @@ const Nav = () => {
     <nav className='container.nav_container'>
         <a className='signup' href="#Signup">Signup</a>
         <a className='login' href="#Login">Login</a>
+
+        {/* TODO: FINISH LOGOUT */}
+        {/* <a className='logout' href="#Logout">Logout</a> */}
     </nav>
   )
 }
