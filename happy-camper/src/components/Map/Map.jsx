@@ -36,6 +36,6 @@ const Map = () => {
               <div ref={mapContainer} className="map-container" />
             </div>
   );
-}
+};
+export default SearchableMap;
 
-export default Map
