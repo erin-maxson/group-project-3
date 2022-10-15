@@ -44,8 +44,8 @@ const typeDefs = gql`
     title: String!
     description: String!
     rating: Int!
-    latitude: Int!
-    longitude: Int!
+    latitude: Float!
+    longitude: Float!
  }
  
  type Mutation {
