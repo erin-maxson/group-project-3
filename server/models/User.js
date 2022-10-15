@@ -20,9 +20,6 @@ const userSchema = new Schema(
             unique: true,
             // REGEX to set rules for emails
             match: [/.+@.+\..+/, 'Must match an email address!'],
-            validate: {
-                isEmail: true
-            }
         },
         password: {
             type: String,
