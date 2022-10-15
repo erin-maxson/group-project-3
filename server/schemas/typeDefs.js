@@ -8,7 +8,6 @@ const typeDefs = gql`
       _id: ID
       username: String
       email: String
-      password: String
       savedLocations: [Location]!
    }
 
@@ -18,20 +17,21 @@ const typeDefs = gql`
       title: String
       description: String
       rating: Int
-      latitude: Int
-      longitude: Int
+      latitude: Float
+      longitude: Float
 
    }
 
    type Auth {
-      token: ID!
+      token: String!
       user: User
    }
 
    type Query {
       users: [User]
       user(username: String!): User
-      savedLocations(username: String): [Location]
+      savedLocations(username: String!): [Location]
+      locations: [Location]
       location(locationId: ID!): Location
       me: User
 
