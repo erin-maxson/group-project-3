@@ -1,0 +1,39 @@
+nav {
+    background-color: var(--color-primary-variant);
+    position: fixed;
+    right: 100px;
+    z-index: 1;
+    margin: -60px;
+
+}
+
+.signup, .login {
+    padding: 10px;
+    margin: 10px;
+    border: solid 2px;
+    border-radius: 30px;
+    border-color: var(--color-bg);
+    color: var(--color-bg);
+
+}
+
+a:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    text-decoration: underline;
+}
+
+/* TODO: MEDIA QUERIES */
+/* MEDIA QUERIES (MEDIUM DEVICES / TABLETS)
+@media screen and (max-width: 1024px) {
+    nav {
+       
+    }
+}
+
+/* MEDIA QUERIES (SMALL DEVICES / MOBILE) */
+/* @media screen and (max-width: 600px) {
+    nav {
+       
+    }
+} */ 

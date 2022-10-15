@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
+const locationSchema = require('./Location')
+
 const userSchema = new Schema(
     {
         username: {
@@ -26,7 +28,9 @@ const userSchema = new Schema(
             type: String,
             required: true,
             min: 6
-        }
+        },
+        savedLocations:
+         [locationSchema]
     }
 );
 // function to hash user password
