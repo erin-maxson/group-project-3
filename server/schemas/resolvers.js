@@ -12,9 +12,12 @@ const resolvers = {
         // user: async(parent, { username}) => {
         //     return User.findOne({username}).populate('savedLocations')
         // },
-        locations: async (parent, {username}) => {
+        savedLocations: async (parent, {username}) => {
             const params = username ? {username} : {};
-            return Location.find(params).sort({createdAt: -1}) //needs to be fixed since it is a map
+            return Location.find(params).sort({createdAt: -1}) 
+        },
+        locations: async ()=> {
+            return Location.find()
         },
         location: async (parent, {locationId}) => {
             return Location.findOne({_id: locationId})
@@ -32,3 +35,5 @@ const resolvers = {
 
 
 }
+
+module.exports = resolvers;
