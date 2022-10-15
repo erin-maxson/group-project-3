@@ -14,9 +14,9 @@ const Map = () => {
             if (map.current) return; // initialize map only once
             map.current = new mapboxgl.Map({
               container: mapContainer.current,
-              style: 'mapbox://styles/mapbox/streets-v11',
+              style: 'mapbox://styles/mapbox/outdoors-v11',
               center: [lng, lat],
-              zoom: zoom
+              zoom: 4
             });
           });
     
@@ -28,6 +28,28 @@ const Map = () => {
               setZoom(map.current.getZoom().toFixed(2));
             });
           });
+
+          // TODO: CUSTOM MAKERS
+          // for (const marker of geojson.features) {
+          //   // Create a DOM element for each marker.
+          //   const el = document.createElement('div');
+          //   const width = '20'
+          //   const height = '20'
+          //   el.className = 'marker';
+          //   el.style.backgroundImage = `url(https://placekitten.com/g/${width}/${height}/)`;
+          //   el.style.width = `${width}px`;
+          //   el.style.height = `${height}px`;
+          //   el.style.backgroundSize = '100%';
+             
+          //   el.addEventListener('click', () => {
+          //   window.alert(marker.properties.message);
+          //   });
+             
+          //   // Add markers to the map.
+          //   new mapboxgl.Marker(el)
+          //   .setLngLat(marker.geometry.coordinates)
+          //   .addTo(map);
+          //   }
 
           return (
             <div>
