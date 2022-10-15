@@ -10,13 +10,21 @@ const typeDefs =gql`
     latitude: Float!
     longitude: Float!
  }
+
+ input UpdateLocationInput {
+    title: String
+    description: String
+    rating: Int
+    latitude: Float
+    longitude: Float
+ }
  
  type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     saveLocation(location: SaveLocationInput): User
     removeLocation(locationId: ID!): Location
-    updateLocation(locationId: ID!, title: String, rating: Int, latitude: Float, longitude: Float): Location
+    updateLocation(locationId: ID!, updateLocation: UpdateLocationInput): Location
  }
 `;
 
