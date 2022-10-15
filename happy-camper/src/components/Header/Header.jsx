@@ -4,6 +4,7 @@ import LOGO from '../../assets/happycamperlogo.png'
 
 const Header = () => {
   return (
+<<<<<<< HEAD
     <div className='container.header_container'>
       <img src={LOGO} alt="happycamper logo" />
       <mapbox-search-box
@@ -11,6 +12,10 @@ const Header = () => {
         proximity="0,0"
       >
       </mapbox-search-box>
+=======
+    <div className='header'>
+        <img src={LOGO} alt="happycamper logo" />
+>>>>>>> develop
     </div>
   )
 }

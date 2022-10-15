@@ -1,15 +1,39 @@
 nav {
-    background: rgba(0, 0, 0, 0.3);
-    width: max-content;
-    display: block;
-    padding: 0.7rem 1.7rem;
-    z-index: 2;
+    background-color: var(--color-primary-variant);
     position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 2rem;
-    display: flex;
-    gap: 0.8rem;
-    border-radius: 3rem;
-    backdrop-filter: blur(15px);
+    right: 100px;
+    z-index: 1;
+    margin: -60px;
+
 }
+
+.signup, .login {
+    padding: 10px;
+    margin: 10px;
+    border: solid 2px;
+    border-radius: 30px;
+    border-color: var(--color-bg);
+    color: var(--color-bg);
+
+}
+
+a:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    text-decoration: underline;
+}
+
+/* TODO: MEDIA QUERIES */
+/* MEDIA QUERIES (MEDIUM DEVICES / TABLETS)
+@media screen and (max-width: 1024px) {
+    nav {
+       
+    }
+}
+
+/* MEDIA QUERIES (SMALL DEVICES / MOBILE) */
+/* @media screen and (max-width: 600px) {
+    nav {
+       
+    }
+} */ 
