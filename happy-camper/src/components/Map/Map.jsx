@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Map from 'react-map-gl';
 import DeckGL, { GeoJsonLayer } from 'deck.gl';
 import Geocoder from 'react-map-gl-geocoder';
+import {FaMapMarkerAlt} from 'react-icons/fa'
 
 Geocoder.accessToken = 'pk.eyJ1IjoiYWlybWF4MTQiLCJhIjoiY2w4amZrbXhvMDY4ODN3bzJtbnpjNTJsMSJ9.K1O2yAfN9AJ8eg32-XuENA';
 
@@ -61,6 +62,24 @@ const SearchableMap = () => {
           mapboxApiAccessToken={Geocoder.accessToken}
           position='top-left'
         />
+
+        <div className="otherUserMarkers">
+          <Marker longitude={-100} latitude={40} anchor="bottom" >
+            <img src={FaMapMarkerAlt} />
+          </Marker>
+        </div>
+
+        <div className='popup-container'>
+//        {showPopup && (
+      <Popup longitude={-100} latitude={40}
+        anchor="bottom"
+        onClose={() => setShowPopup(false)}>
+        You are here
+        <button className="addBtn">Add this stop to your list!</button>
+      </Popup>)}
+    </div>
+
+
       </Map>
       <DeckGL {...viewport} layers={[searchResultLayer]} />
     </div>
