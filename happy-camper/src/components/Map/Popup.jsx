@@ -1,8 +1,6 @@
 import * as React from 'react';
 import {Popup} from 'react-map-gl';
 
-import React from 'react'
-
 const Popup = () => {
   return (
     <div className='popup-container'>
