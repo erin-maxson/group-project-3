@@ -1,7 +1,7 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import { useEffect, useRef, useState } from 'react';
-import Map from 'react-map-gl';
+import Map, {Popup, Marker} from 'react-map-gl';
 import DeckGL, { GeoJsonLayer } from 'deck.gl';
 import Geocoder from 'react-map-gl-geocoder';
 import {FaMapMarkerAlt} from 'react-icons/fa'
@@ -11,6 +11,7 @@ Geocoder.accessToken = 'pk.eyJ1IjoiYWlybWF4MTQiLCJhIjoiY2w4amZrbXhvMDY4ODN3bzJtb
 //query for getaccesstoken (keep token serverside for security)
 
 const SearchableMap = () => {
+  const [showPopup, setShowPopup] = useState(true);
   const [viewport, setViewPort] = useState({
     latitude: 0,
     longitude: 0,
@@ -65,7 +66,7 @@ const SearchableMap = () => {
 
         <div className="otherUserMarkers">
           <Marker longitude={-100} latitude={40} anchor="bottom" >
-            <img src={FaMapMarkerAlt} />
+          <FaMapMarkerAlt />
           </Marker>
         </div>
 
