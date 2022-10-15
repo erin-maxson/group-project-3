@@ -7,7 +7,7 @@ const locationSchema = new Schema(
             unique: true,
             required: true,
             trim: true,
-            min:2,
+            min: 2,
             max: 25,
 
         },
@@ -43,4 +43,4 @@ const locationSchema = new Schema(
 
 const Location = model('Location', locationSchema);
 
-module.exports = Location;
+module.exports = { Location, locationSchema };
