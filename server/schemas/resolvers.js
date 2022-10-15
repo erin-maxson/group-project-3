@@ -9,9 +9,9 @@ const resolvers = {
         users: async () => {
             return User.find().populate('savedLocations')
         },
-        user: async(parent, { username}) => {
-            return User.findOne({username}).populate('savedLocations')
-        },
+        // user: async(parent, { username}) => {
+        //     return User.findOne({username}).populate('savedLocations')
+        // },
         locations: async (parent, {username}) => {
             const params = username ? {username} : {};
             return Location.find(params).sort({createdAt: -1}) //needs to be fixed since it is a map
