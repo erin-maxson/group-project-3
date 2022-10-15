@@ -3,10 +3,13 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "deck.gl": "^8.8.13",
         "dotenv": "^16.0.3",
         "mapbox-gl": "^2.9.2",
+        "mapbox-gl-geocoder": "^2.0.1",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
+        "react-map-gl-geocoder": "^2.2.0",
         "react-scripts": "^4.0.3"
     },
     "scripts": {
