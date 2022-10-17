@@ -53,23 +53,31 @@ const resolvers = {
 
             return { token, user };
         },
-        saveLocation: async (parent, args, context) => {
+        saveLocation: async (parent, location, context) => {
+            if (context.user) {
+                const savedLocation = await Location.create(
+                    location
+                )
+
+            }
+            
+            
             if (!context.user) {
 
                 throw new AuthenticationError('You need to be logged in!')
 
             }
-            await User.findOneandUpdate(
+            const updatedUser = await User.findOneAndUpdate(
                 { _id: context.user._id },
-                { $addToSet: { savedLocations: args.location } },
+                { $addToSet: { savedLocations: savedLocation._id } },
                 {new: true, runValidators: true}
             )
-            return location
+            return updatedUser
 
         },
 
         updateLocation: async () => {
-            await Location.findOneandUpdate(
+            const updatedLocation = await Location.findOneAndUpdate(
                 {_id: location._id},
                 {$push: {location: args.updateLocation}},
                 {new: true, runValidators: true}
