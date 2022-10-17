@@ -46,7 +46,6 @@ const SearchableMap = () => {
   }, [viewport]);
   return (
     <div>
-      <h1>Use the search bar to find a location on the map</h1>
       <Map
         ref={mapRef}
         {...viewport}
