@@ -1,10 +1,11 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import { useEffect, useRef, useState } from 'react';
-import Map, {Popup, Marker} from 'react-map-gl';
+import Map, { Popup, Marker, NavigationControl } from 'react-map-gl';
 import DeckGL, { GeoJsonLayer } from 'deck.gl';
 import Geocoder from 'react-map-gl-geocoder';
-import {FaMapMarkerAlt} from 'react-icons/fa'
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import * as React from 'react'
 
 /*
 import {KANSAS} from '../../assets/kansas.jpg'
@@ -60,6 +61,7 @@ const SearchableMap = () => {
         onViewportChange={setViewPort}
         mapboxApiAccessToken={Geocoder.accessToken}
       >
+
         <Geocoder
           mapRef={mapRef}
           onResult={handleOnResult}
@@ -70,25 +72,29 @@ const SearchableMap = () => {
 
         <div className="otherUserMarkers">
           <Marker longitude={-100} latitude={40} anchor="bottom" >
-          <FaMapMarkerAlt />
+            <FaMapMarkerAlt />
           </Marker>
         </div>
 
         <div className='popup-container'>
-      {showPopup && (
-      <Popup longitude={-100} latitude={40}
-        anchor="bottom"
-        onClose={() => setShowPopup(false)}>
-        <h3 className='stopName'>MIDDLE OF NOWHERE KANSAS</h3>
-        <p className='stopBio'> Treat yourself to a fun time in a corn field.</p>
-        <button className="addBtn">Add this stop to your list!</button>
-      </Popup>)}
-    </div>
+          {showPopup && (
+            <Popup longitude={-100} latitude={40}
+              anchor="bottom"
+              onClose={() => setShowPopup(false)}>
+              <h3 className='stopName'>MIDDLE OF NOWHERE KANSAS</h3>
+              <p className='stopBio'> Treat yourself to a fun time in a corn field.</p>
+              <button className="addBtn">Add this stop to your list!</button>
+            </Popup>)}
+        </div>
+
+        <NavigationControl position="top-right"/>
 
       </Map>
       <DeckGL {...viewport} layers={[searchResultLayer]} />
     </div>
   );
 };
+
+// SearchableMap.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
 export default SearchableMap;
