@@ -5,7 +5,12 @@ import Map, {Popup, Marker} from 'react-map-gl';
 import DeckGL, { GeoJsonLayer } from 'deck.gl';
 import Geocoder from 'react-map-gl-geocoder';
 import {FaMapMarkerAlt} from 'react-icons/fa'
+
+/*
 import {KANSAS} from '../../assets/kansas.jpg'
+
+saved for future use
+*/
 Geocoder.accessToken = 'pk.eyJ1IjoiYWlybWF4MTQiLCJhIjoiY2w4amZrbXhvMDY4ODN3bzJtbnpjNTJsMSJ9.K1O2yAfN9AJ8eg32-XuENA';
 
 //query for getaccesstoken (keep token serverside for security)
