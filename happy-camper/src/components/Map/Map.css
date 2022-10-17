@@ -1,3 +1,18 @@
-FaMapMarkerAlt {
+.popup-container {
+    width: 20px;
+}
+
+.stopName {
+    font-weight: bold;
+}
+
+.stopBio {
+    font-size: 10px;
+}
+
+.addBtn {
+    color: var(--color-bg);
     background-color: var(--color-primary);
+    border-radius: 30px;
+    border: 1px solid;
 }
