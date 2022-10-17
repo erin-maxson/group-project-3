@@ -43,7 +43,7 @@ const resolvers = {
                 throw new AuthenticationError('Incorrect Credentials');
             }
 
-            const signToken = signToken(user);
+            const token = signToken(user);
             return { token, user };
         },
         addUser: async (parent, { username, email, password }) => {
@@ -53,25 +53,24 @@ const resolvers = {
 
             return { token, user };
         },
-        saveLocation: async (parent, location, context) => {
-            if (context.user) {
-                const savedLocation = await Location.create(
-                    location
-                )
-
-            }
-            
-            
+        saveLocation: async (parent, { location }, context) => {
             if (!context.user) {
 
                 throw new AuthenticationError('You need to be logged in!')
 
             }
+            console.log(location);
+
+            const savedLocation = await Location.create(
+                location
+            );
+            
+
             const updatedUser = await User.findOneAndUpdate(
                 { _id: context.user._id },
                 { $addToSet: { savedLocations: savedLocation._id } },
                 {new: true, runValidators: true}
-            )
+            ).populate('savedLocations')
             return updatedUser
 
         },

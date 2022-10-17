@@ -1,61 +1,89 @@
-import React, { useRef, useEffect, useState } from 'react';
-import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+import 'mapbox-gl/dist/mapbox-gl.css';
+import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import { useEffect, useRef, useState } from 'react';
+import Map, {Popup, Marker} from 'react-map-gl';
+import DeckGL, { GeoJsonLayer } from 'deck.gl';
+import Geocoder from 'react-map-gl-geocoder';
+import {FaMapMarkerAlt} from 'react-icons/fa'
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiYWlybWF4MTQiLCJhIjoiY2w4amZrbXhvMDY4ODN3bzJtbnpjNTJsMSJ9.K1O2yAfN9AJ8eg32-XuENA';
+Geocoder.accessToken = 'pk.eyJ1IjoiYWlybWF4MTQiLCJhIjoiY2w4amZrbXhvMDY4ODN3bzJtbnpjNTJsMSJ9.K1O2yAfN9AJ8eg32-XuENA';
 
-const Map = () => {    
-        const mapContainer = useRef(null);
-        const map = useRef(null);
-        const [lng, setLng] = useState(-70.9);
-        const [lat, setLat] = useState(42.35);
-        const [zoom, setZoom] = useState(9);
-    
-        useEffect(() => {
-            if (map.current) return; // initialize map only once
-            map.current = new mapboxgl.Map({
-              container: mapContainer.current,
-              style: 'mapbox://styles/mapbox/outdoors-v11',
-              center: [lng, lat],
-              zoom: 4
-            });
-          });
-    
-          useEffect(() => {
-            if (!map.current) return; // wait for map to initialize
-            map.current.on('move', () => {
-              setLng(map.current.getCenter().lng.toFixed(4));
-              setLat(map.current.getCenter().lat.toFixed(4));
-              setZoom(map.current.getZoom().toFixed(2));
-            });
-          });
+//query for getaccesstoken (keep token serverside for security)
 
-          // TODO: CUSTOM MAKERS
-          // for (const marker of geojson.features) {
-          //   // Create a DOM element for each marker.
-          //   const el = document.createElement('div');
-          //   const width = '20'
-          //   const height = '20'
-          //   el.className = 'marker';
-          //   el.style.backgroundImage = `url(https://placekitten.com/g/${width}/${height}/)`;
-          //   el.style.width = `${width}px`;
-          //   el.style.height = `${height}px`;
-          //   el.style.backgroundSize = '100%';
-             
-          //   el.addEventListener('click', () => {
-          //   window.alert(marker.properties.message);
-          //   });
-             
-          //   // Add markers to the map.
-          //   new mapboxgl.Marker(el)
-          //   .setLngLat(marker.geometry.coordinates)
-          //   .addTo(map);
-          //   }
+const SearchableMap = () => {
+  const [showPopup, setShowPopup] = useState(true);
+  const [viewport, setViewPort] = useState({
+    latitude: 0,
+    longitude: 0,
+    zoom: 1,
+    transitionDuration: 100,
+  });
+  const [searchResultLayer, setSearchResult] = useState(null);
+  const mapRef = useRef();
+  const handleOnResult = (event) => {
+    console.log(event.result);
+    setSearchResult(
+      new GeoJsonLayer({
+        id: 'search-result',
+        data: event.result.geometry,
+        getFillColor: [255, 0, 0, 128],
+        getRadius: 1000,
+        pointRadiusMinPixels: 10,
+        pointRadiusMaxPixels: 10,
+      })
+    );
+  };
+  const handleGeocoderViewportChange = (viewport) => {
+    const geocoderDefaultOverrides = { transitionDuration: 1000 };
+    console.log('Updating');
+    return setViewPort({
+      ...viewport,
+      ...geocoderDefaultOverrides,
+    });
+  };
+  useEffect(() => {
+    console.log({ viewport });
+  }, [viewport]);
+  return (
+    <div>
+      <Map
+        ref={mapRef}
+        {...viewport}
+        mapStyle='mapbox://styles/mapbox/streets-v9'
+        width='100%'
+        height='70vh'
+        onViewportChange={setViewPort}
+        mapboxApiAccessToken={Geocoder.accessToken}
+      >
+        <Geocoder
+          mapRef={mapRef}
+          onResult={handleOnResult}
+          onViewportChange={handleGeocoderViewportChange}
+          mapboxApiAccessToken={Geocoder.accessToken}
+          position='top-left'
+        />
 
-          return (
-            <div>
-              <div ref={mapContainer} className="map-container" />
-            </div>
-          );
-    }
+        <div className="otherUserMarkers">
+          <Marker longitude={-100} latitude={40} anchor="bottom" >
+          <FaMapMarkerAlt />
+          </Marker>
+        </div>
 
-export default Map
+        <div className='popup-container'>
+//        {showPopup && (
+      <Popup longitude={-100} latitude={40}
+        anchor="bottom"
+        onClose={() => setShowPopup(false)}>
+        You are here
+        <button className="addBtn">Add this stop to your list!</button>
+      </Popup>)}
+    </div>
+
+
+      </Map>
+      <DeckGL {...viewport} layers={[searchResultLayer]} />
+    </div>
+  );
+};
+
+export default SearchableMap;
