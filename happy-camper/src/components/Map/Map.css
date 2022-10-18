@@ -1,17 +1,12 @@
-.marker {
-    width: 20px;
-    height: 20px;
-}
-
 .popup-container {
     width: 20px;
 }
 
-.stopName {
+.pinName {
     font-weight: bold;
 }
 
-.stopBio {
+.pinDescription {
     font-size: 10px;
 }
 
@@ -21,3 +16,4 @@
     border-radius: 30px;
     border: 1px solid;
 }
+
