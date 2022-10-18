@@ -88,13 +88,10 @@ const SearchableMap = () => {
         </div>
 
         <NavigationControl position="top-right"/>
-
       </Map>
       <DeckGL {...viewport} layers={[searchResultLayer]} />
     </div>
   );
 };
-
-// SearchableMap.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
 export default SearchableMap;
