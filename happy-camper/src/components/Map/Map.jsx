@@ -72,7 +72,7 @@ const SearchableMap = () => {
 
         <div className="otherUserMarkers">
           <Marker longitude={-100} latitude={40} anchor="bottom" >
-            <FaMapMarkerAlt />
+            <FaMapMarkerAlt style={{fontSize: viewport.zoom *7, color:'#f39200'}}/>
           </Marker>
         </div>
 
@@ -81,9 +81,28 @@ const SearchableMap = () => {
             <Popup longitude={-100} latitude={40}
               anchor="bottom"
               onClose={() => setShowPopup(false)}>
-              <h3 className='stopName'>MIDDLE OF NOWHERE KANSAS</h3>
-              <p className='stopBio'> Treat yourself to a fun time in a corn field.</p>
-              <button className="addBtn">Add this stop to your list!</button>
+              <h3 className='pinName'>MIDDLE OF NOWHERE KANSAS</h3>
+              <p className='pinDescription'> Treat yourself to a fun time in a corn field.</p>
+              <button className="addBtn">Add this pin to your list!</button>
+
+            {/* form for adding a pin */}
+            {/* <div>
+              <form className='pinForm' action="">
+                <label htmlFor="">Pin Name</label>
+                <input type="text" placeholder='Enter a name for your pin.' />
+                <label htmlFor="">Pin Description</label>
+                <input type="text" placeholder='Enter a short description for your pin.' />
+                <label htmlFor="">Leave a Review</label>
+                <select name="" id="">
+                  <option value="">1</option>
+                  <option value="">2</option>
+                  <option value="">3</option>
+                  <option value="">4</option>
+                  <option value="">5</option>
+                </select>
+                <button className='submitBtn' type='submit'>Add pin to map!</button>
+              </form>
+            </div> */}
             </Popup>)}
         </div>
 
