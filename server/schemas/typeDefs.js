@@ -61,7 +61,7 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     saveLocation(location: SaveLocationInput): User
     removeLocation(locationId: ID!): Location
-    updateLocation(locationId: ID!, updateLocation: UpdateLocationInput): Location
+    updateLocation(locationId: ID!, newLocation: UpdateLocationInput): Location
  }
 `;
 
