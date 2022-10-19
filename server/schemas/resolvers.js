@@ -74,7 +74,6 @@ const resolvers = {
             return updatedUser
 
         },
-
         updateLocation: async (parent, {locationId, newLocation}, context) => {
             if(!context.user) {
                 throw new AuthenticationError('You need to be logged in!')
