@@ -84,6 +84,8 @@ const SearchableMap = () => {
               onClose={() => setShowPopup(false)}>
               <h3 className='pinName'>MIDDLE OF NOWHERE KANSAS</h3>
               <p className='pinDescription'> Treat yourself to a fun time in a corn field.</p>
+              <h4>Reviews:</h4>
+              <p className='review'>Kansas is just one big farm.</p>
               <button className="addBtn">Add this pin to your list!</button>
 
             {/* form for adding a pin */}
@@ -101,7 +103,7 @@ const SearchableMap = () => {
             </Popup>)}
         </div>
 
-        <NavigationControl position="top-right"/>
+        <NavigationControl className='navcontrol' />
       </Map>
       <DeckGL {...viewport} layers={[searchResultLayer]} />
     </div>
