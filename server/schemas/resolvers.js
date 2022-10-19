@@ -75,25 +75,46 @@ const resolvers = {
 
         },
 
-        updateLocation: async () => {
-            await Location.findOneandUpdate(
-                {_id: location._id},
-                {$push: {location: args.updateLocation}},
-                {new: true, runValidators: true}
+        updateLocation: async (parent, {locationId, newLocation}, context) => {
+            if(!context.user) {
+                throw new AuthenticationError('You need to be logged in!')
+            }
+            
+            /*const updatedLocation = await Location.findOneAndUpdate({
+                _id: locationId,
+                newLocation
+            })
+
+            await User.findOneAndUpdate(
+                {_id: context.user._id},
+                {$set: {locations: updatedLocation._id}},
+                {new: true}
             )
-            return location
+            
+            return updatedLocation;*/
+            const updatedLocation = await Location.findByIdAndUpdate(
+                {_id: locationId},
+                {$set:{updateLocation:{newLocation}}},
+                {new: true}
+            )
+            return updatedLocation
         },
         removeLocation: async (parent, args, context) => {
             if(!context.user) {
                 throw new AuthenticationError('You need to be logged in!');
             }
-            const updatedUser = await User.findOneAndUpdate(
+
+            const removedLocation = await Location.findOneAndDelete({
+                _id: args.locationId
+            })
+
+            await User.findOneAndUpdate(
                 {_id: context.user._id},
-                {$pull: { savedLocations: { locationId: args.locationId }}},
-                { new: true }
+                {$pull: {locations: removedLocation._id}},
+                
             );
 
-            return updatedUser;
+            return removedLocation;
         }
     }
 };
