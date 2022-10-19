@@ -62,27 +62,27 @@ query Locations {
 
 
 
-export const QUERY_USER = gql`
+// export const QUERY_USER = gql`
 
-query User($username: String!) {
-    user(username: $username) {
-      _id
-      username
-      email
-      savedLocations {
-        _id
-        username
-        title
-        description
-        rating
-        latitude
-        longitude
-      }
-    }
-  }
+// query User($username: String!) {
+//     user(username: $username) {
+//       _id
+//       username
+//       email
+//       savedLocations {
+//         _id
+//         username
+//         title
+//         description
+//         rating
+//         latitude
+//         longitude
+//       }
+//     }
+//   }
 
 
-`
+// `
 
 export const QUERY_USERS = gql`
 
