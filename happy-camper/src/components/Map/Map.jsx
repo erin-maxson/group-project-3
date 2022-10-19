@@ -2,7 +2,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import './Map.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import { useEffect, useRef, useState } from 'react';
-import Map, { Popup, Marker, NavigationControl } from 'react-map-gl';
+import Map, { Popup, Marker, NavigationControl, ScaleControl } from 'react-map-gl';
 import DeckGL, { GeoJsonLayer } from 'deck.gl';
 import Geocoder from 'react-map-gl-geocoder';
 import { FaMapMarkerAlt,  } from 'react-icons/fa';
@@ -58,7 +58,7 @@ const SearchableMap = () => {
         {...viewport}
         mapStyle='mapbox://styles/mapbox/outdoors-v11'
         width='100%'
-        height='80vh'
+        height='100vh'
         onViewportChange={setViewPort}
         mapboxApiAccessToken={Geocoder.accessToken}
       >
@@ -104,6 +104,7 @@ const SearchableMap = () => {
         </div>
 
         <NavigationControl className='navcontrol' />
+        <ScaleControl className='scalecontrol'/>
       </Map>
       <DeckGL {...viewport} layers={[searchResultLayer]} />
     </div>
