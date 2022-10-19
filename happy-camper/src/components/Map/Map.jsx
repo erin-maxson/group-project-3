@@ -1,10 +1,11 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
+import './Map.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import { useEffect, useRef, useState } from 'react';
-import Map, { Popup, Marker, NavigationControl } from 'react-map-gl';
+import Map, { Popup, Marker, NavigationControl, ScaleControl } from 'react-map-gl';
 import DeckGL, { GeoJsonLayer } from 'deck.gl';
 import Geocoder from 'react-map-gl-geocoder';
-import { FaMapMarkerAlt } from 'react-icons/fa';
+import { FaMapMarkerAlt,  } from 'react-icons/fa';
 import * as React from 'react'
 
 /*
@@ -57,7 +58,7 @@ const SearchableMap = () => {
         {...viewport}
         mapStyle='mapbox://styles/mapbox/outdoors-v11'
         width='100%'
-        height='80vh'
+        height='100vh'
         onViewportChange={setViewPort}
         mapboxApiAccessToken={Geocoder.accessToken}
       >
@@ -77,36 +78,33 @@ const SearchableMap = () => {
         </div>
 
         <div className='popup-container'>
-          {showPopup && (
-            <Popup longitude={-100} latitude={40}
+          {showPopup && ( 
+            <Popup className='popup' longitude={-100} latitude={40}
               anchor="bottom"
               onClose={() => setShowPopup(false)}>
               <h3 className='pinName'>MIDDLE OF NOWHERE KANSAS</h3>
               <p className='pinDescription'> Treat yourself to a fun time in a corn field.</p>
+              <h4>Reviews:</h4>
+              <p className='review'>Kansas is just one big farm.</p>
               <button className="addBtn">Add this pin to your list!</button>
 
             {/* form for adding a pin */}
-            {/* <div>
+            {/* <div className='add-pin'>
               <form className='pinForm' action="">
                 <label htmlFor="">Pin Name</label>
                 <input type="text" placeholder='Enter a name for your pin.' />
                 <label htmlFor="">Pin Description</label>
                 <input type="text" placeholder='Enter a short description for your pin.' />
                 <label htmlFor="">Leave a Review</label>
-                <select name="" id="">
-                  <option value="">1</option>
-                  <option value="">2</option>
-                  <option value="">3</option>
-                  <option value="">4</option>
-                  <option value="">5</option>
-                </select>
+                <input type="text" placeholder='Add your thoughts about this place."' />
                 <button className='submitBtn' type='submit'>Add pin to map!</button>
               </form>
             </div> */}
             </Popup>)}
         </div>
 
-        <NavigationControl position="top-right"/>
+        <NavigationControl className='navcontrol' />
+        <ScaleControl className='scalecontrol'/>
       </Map>
       <DeckGL {...viewport} layers={[searchResultLayer]} />
     </div>
