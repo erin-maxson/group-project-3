@@ -2,7 +2,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import './Map.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import { useEffect, useRef, useState } from 'react';
-import Map, { Popup, Marker, NavigationControl, ScaleControl } from 'react-map-gl';
+import Map, { Popup, Marker, NavigationControl, ScaleControl,  } from 'react-map-gl';
 import DeckGL, { GeoJsonLayer } from 'deck.gl';
 import Geocoder from 'react-map-gl-geocoder';
 import { FaMapMarkerAlt,  } from 'react-icons/fa';
