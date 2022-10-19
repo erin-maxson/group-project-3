@@ -79,22 +79,16 @@ const resolvers = {
             if(!context.user) {
                 throw new AuthenticationError('You need to be logged in!')
             }
-            
-            /*const updatedLocation = await Location.findOneAndUpdate({
-                _id: locationId,
-                newLocation
-            })
-
-            await User.findOneAndUpdate(
-                {_id: context.user._id},
-                {$set: {locations: updatedLocation._id}},
-                {new: true}
-            )
-            
-            return updatedLocation;*/
+    
             const updatedLocation = await Location.findByIdAndUpdate(
                 {_id: locationId},
-                {$set:{updateLocation:{newLocation}}},
+                {$set:{
+                    title: newLocation.title,
+                    description: newLocation.description,
+                    rating: newLocation.rating,
+                    latitude: newLocation.latitude,
+                    longitude: newLocation.longitude
+                }},
                 {new: true}
             )
             return updatedLocation
