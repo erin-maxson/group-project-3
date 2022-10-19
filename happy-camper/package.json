@@ -2,6 +2,7 @@
     "name": "use-mapbox-gl-js-with-react",
     "version": "0.1.0",
     "private": true,
+    "proxy": "http://localhost:3001",
     "dependencies": {
         "deck.gl": "^8.8.13",
         "dotenv": "^16.0.3",
@@ -10,11 +11,20 @@
         "react-icons": "^4.6.0",
         "react-map-gl": "^5.3.19",
         "react-map-gl-geocoder": "^2.2.0",
-        "react-scripts": "^4.0.3"
+        "react-router-dom": "^6.2.1",
+        "react-scripts": "^4.0.3",
+        "@apollo/client": "^3.7.0",
+        "@apollo/react-hooks": "^4.0.0",
+        "@testing-library/jest-dom": "^4.2.4",
+        "@testing-library/react": "^9.3.2",
+        "@testing-library/user-event": "^7.1.2",
+        "jwt-decode": "^2.2.0"
     },
     "scripts": {
         "start": "react-scripts start",
-        "build": "react-scripts build"
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
     },
     "eslintConfig": {
         "extends": [
