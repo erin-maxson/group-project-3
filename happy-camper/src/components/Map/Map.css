@@ -1,13 +1,16 @@
 .popup{
     width: 250px;
+    text-align: center;
 }
 
 .pinName {
     font-weight: bold;
+    padding: 5px;
 }
 
 .pinDescription {
     font-size: 14px;
+    padding: 5px;
 }
 
 .addBtn {
