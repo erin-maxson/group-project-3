@@ -40,50 +40,49 @@ mutation AddUser($username: String!, $email: String!, $password: String!) {
 
 export const ADD_LOCATION = gql`
 
-mutation SaveLocation {
-    saveLocation {
+mutation SaveLocation($location: SaveLocationInput) {
+    saveLocation(location: $location) {
       _id
       username
       email
+      savedLocations {
+        _id
+        username
+        title
+        description
+        rating
+        latitude
+        longitude
+      }
     }
   }
-
-
-
 `;
 
 
 
 
-export const REMOVE_LOCATION = gql`
+// export const REMOVE_LOCATION = gql`
 
 
-mutation RemoveLocation($locationId: ID!) {
-    removeLocation(locationId: $locationId) {
-      _id
-      username
-      title
-      description
-      rating
-      latitude
-      longitude
-    }
-  }
+// mutation RemoveLocation($locationId: ID!) {
+//     removeLocation(locationId: $locationId) {
+//       _id
+//     }
+//   }
 
-`;
+// `;
 
-export const UPDATE_LOCATION = gql`
+// export const UPDATE_LOCATION = gql`
 
-mutation UpdateLocation($locationId: ID!) {
-    updateLocation(locationId: $locationId) {
-      _id
-      username
-      title
-      description
-      rating
-      latitude
-      longitude
-    }
-  }
+// mutation UpdateLocation($locationId: ID!, $newLocation: UpdateLocationInput) {
+//   updateLocation(locationId: $locationId, newLocation: $newLocation) {
+//     _id
+//     title
+//     description
+//     rating
+//     latitude
+//     longitude
+//   }
+// }
 
-`;
+// `;
