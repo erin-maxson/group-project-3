@@ -4,9 +4,45 @@ import {Link} from 'react-router-dom'
 import {useMutation} from '@apollo/happy-camper'
 import {LOGIN} from '../../utils/mutations'
 
+import Auth from '../../utils/auth'
 
 
-const Login = () => {
+const Login = (props) => {
+
+    const [formState, setFormState] = useState({ username: '', email: '', password: ''})
+    const [login, {error, data}] = useMutation(LOGIN)
+
+    const handleChange = (event) => {
+        const {name, value} = event.target
+
+        setFormState({
+            ...formState,
+            [name]: value,
+        })
+    }
+
+    const handleFormSubmit = async (event) => {
+        event.preventDefault();
+        console.log(formState);
+        try {
+          const { data } = await login({
+            variables: { ...formState },
+          });
+    
+          Auth.login(data.login.token);
+        } catch (e) {
+          console.error(e);
+        }
+    
+        // clear form values
+        setFormState({
+          username: '',
+          email: '',
+          password: '',
+        });
+      };
+
+
     return (
         <div>
             <div className='login-container'>
@@ -16,14 +52,39 @@ const Login = () => {
 
                 <h2>Login</h2>
 
-                <form action="">
+                <form onSubmit={handleFormSubmit}>
                     <p>Username</p>
-                    <input type="text" placeholder="username" />
+                    <input 
+                    type="text" 
+                    placeholder="username" 
+                    name="username"
+                    value={formState.username}
+                    onChange={handleChange}
+
+                    />
                     <p>Email</p>
-                    <input type="email" placeholder="email" />
+                    <input 
+                    type="email" 
+                    placeholder="email"
+                    name="email"
+                    value={formState.password}
+                    onChange={handleChange}
+                     />
+
+
                     <p>Password</p>
-                    <input type="password" placeholder="password" />
-                    <button className='signupBtn'>On the road again...</button>
+                    <input 
+                    type="password" 
+                    placeholder="password" 
+                    name="password"
+                    value={formState.password}
+                    onChange={handleChange}
+                    />
+                    <button className='signupBtn' 
+                    type="submit"
+                    >
+                        On the road again...
+                        </button>
                 </form>
 
             </div>
