@@ -19,6 +19,7 @@ Geocoder.accessToken = 'pk.eyJ1IjoiYWlybWF4MTQiLCJhIjoiY2w4amZrbXhvMDY4ODN3bzJtb
 
 const SearchableMap = () => {
   const [showPopup, setShowPopup] = useState(true);
+  const [newPlace, setNewPlace] = useState(null);
   const [viewport, setViewPort] = useState({
     latitude: 47.1164,
     longitude: -101.2996,
@@ -26,7 +27,7 @@ const SearchableMap = () => {
     transitionDuration: 100,
   });
 
-  
+
   const [searchResultLayer, setSearchResult] = useState(null);
   const mapRef = useRef();
   const handleOnResult = (event) => {
@@ -54,6 +55,16 @@ const SearchableMap = () => {
   useEffect(() => {
     console.log({ viewport });
   }, [viewport]);
+
+  const handleAddClick = (e) => {
+    console.log(e)
+    const [long, lat] = e.lngLat;
+    setNewPlace({
+      lat,
+      long
+    });
+  };
+
   return (
     <div>
       <Map
@@ -62,9 +73,10 @@ const SearchableMap = () => {
         mapStyle='mapbox://styles/mapbox/outdoors-v11'
         width='100%'
         height='100vh'
+        dragPan= {true}
         onViewportChange={setViewPort}
+        onDblClick = {handleAddClick}
         mapboxApiAccessToken={Geocoder.accessToken}
-        dragPan= 'true'
       >
 
         <Geocoder
@@ -85,6 +97,8 @@ const SearchableMap = () => {
           {showPopup && ( 
             <Popup className='popup' longitude={-100} latitude={40}
               anchor="bottom"
+              closeButton={true}
+              closeOnClick={false}
               onClose={() => setShowPopup(false)}>
               <h3 className='pinName'>MIDDLE OF NOWHERE KANSAS</h3>
               <p className='pinDescription'> Treat yourself to a fun time in a corn field.</p>
