@@ -1,12 +1,19 @@
 /* Pin Popup onClick */
-.popup{
+.popup {
     width: 250px;
     text-align: center;
+    z-index: 2;
+}
+
+.exitBtn {
+    position: absolute;
+    right: 10px;
+    margin: 0px 2px;
 }
 
 .pinName {
     font-weight: bold;
-    padding: 5px;
+    padding: 15px;
 }
 
 .pinDescription, .review {
@@ -23,7 +30,16 @@
 }
 
 /* Pin Popup Form */
-/* TODO */
+
+.pinform {
+    width: 250px;
+    text-align: center;
+    z-index: 2;
+}
+
+input {
+    padding: 5px;
+}
 
 /* Navigation Control */
 .navcontrol {
