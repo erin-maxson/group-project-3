@@ -3,6 +3,7 @@ import logo from '../../assets/vanlogo.png';
 // import { Cancel, Room } from '@material-ui/icons';
 import React, { useRef, useState } from 'react';
 import Auth from '../../utils/auth';
+import { Link } from 'react-router-dom';
 
 import { ADD_USER } from '../../utils/mutations';
 import { useMutation } from '@apollo/client';
@@ -40,48 +41,61 @@ const Signup = () => {
   };
 
   return (
-    <div className='signup-container'>
-      <div className='logo'>
-        <img src={logo} alt='small van logo' />
-      </div>
+    <div>
+      <div className='signup-container'>
+        <div className='logo'>
+          <img src={logo} alt='small van logo' />
+        </div>
 
-      <h2>Sign up</h2>
+        <h2>Sign up</h2>
 
-      <form onSubmit={handleFormSubmit}>
-        <p>Create your username</p>
-        <input
-          type="text"
-          placeholder="username"
-          name="username"
-          value={formState.name}
-          onChange={handleChange}
-        />
-        <p>Add your email</p>
-        <input
-          type="email"
-          placeholder="email"
-          name="email"
-          value={formState.email}
-          onChange={handleChange}
-        />
-        <p>Create your password</p>
-        <input
-          type="password"
-          placeholder="**********"
-          name="password"
-          value={formState.password}
-          onChange={handleChange}
-        />
-        <button className='signupBtn' type="submit">Let's go!</button>
-      </form>
-    {error && (
-      <div>
-        {error.message}
+        <div>
+          {data ? (
+            <p>
+              Success! You may now head{' '}
+              <Link to="/">back to the homepage.</Link>
+            </p>
+          ) : (
+            <form onSubmit={handleFormSubmit}>
+              <p>Create your username</p>
+              <input
+                type="text"
+                placeholder="username"
+                name="username"
+                value={formState.name}
+                onChange={handleChange}
+              />
+              <p>Add your email</p>
+              <input
+                type="email"
+                placeholder="email"
+                name="email"
+                value={formState.email}
+                onChange={handleChange}
+              />
+              <p>Create your password</p>
+              <input
+                type="password"
+                placeholder="**********"
+                name="password"
+                value={formState.password}
+                onChange={handleChange}
+              />
+              <button className='signupBtn' type="submit">Let's go!</button>
+            </form>
+          )}
+        </div>
+        
+        {error && (
+          <div>
+            {error.message}
+          </div>
+        )}
+
       </div>
-    )}
 
     </div>
-  );
+  )
 };
 
 export default Signup;
