@@ -2,7 +2,7 @@ import React from 'react'
 import Header from './components/Nav/Nav'
 import Nav from './components/Header/Header'
 import Signup from './components/Signup/Signup'
-// need to import login item here when ready to connect to backend
+import Login from './components/Login/Login'
 import Map from './components/Map/Map'
 import {
   ApolloClient,
@@ -40,6 +40,7 @@ export default function App() {
       <Router>
         <div className='App'>
           <Signup />
+          <Login/>
           <Nav />
           <Header />
           <Map />
