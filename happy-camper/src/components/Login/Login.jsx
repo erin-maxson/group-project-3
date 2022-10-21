@@ -80,7 +80,7 @@ const Login = (props) => {
                                 type="email"
                                 placeholder="email"
                                 name="email"
-                                value={formState.password}
+                                value={formState.email}
                                 onChange={handleChange}
                             />
 
