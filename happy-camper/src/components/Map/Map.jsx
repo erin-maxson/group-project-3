@@ -5,7 +5,8 @@ import { useEffect, useRef, useState } from 'react';
 import Map, { Popup, Marker, NavigationControl, ScaleControl, GeolocateControl } from 'react-map-gl';
 import DeckGL, { GeoJsonLayer } from 'deck.gl';
 import Geocoder from 'react-map-gl-geocoder';
-import { FaMapMarkerAlt,  } from 'react-icons/fa';
+import { FaMapMarkerAlt} from 'react-icons/fa';
+import { AiFillCloseCircle } from 'react-icons/ai'
 import * as React from 'react'
 
 /*
@@ -19,12 +20,15 @@ Geocoder.accessToken = 'pk.eyJ1IjoiYWlybWF4MTQiLCJhIjoiY2w4amZrbXhvMDY4ODN3bzJtb
 
 const SearchableMap = () => {
   const [showPopup, setShowPopup] = useState(true);
+  // const [newPlace, setNewPlace] = useState(null);
   const [viewport, setViewPort] = useState({
     latitude: 47.1164,
     longitude: -101.2996,
     zoom: 3.5,
     transitionDuration: 100,
   });
+
+
   const [searchResultLayer, setSearchResult] = useState(null);
   const mapRef = useRef();
   const handleOnResult = (event) => {
@@ -48,9 +52,20 @@ const SearchableMap = () => {
       ...geocoderDefaultOverrides,
     });
   };
+
   useEffect(() => {
     console.log({ viewport });
   }, [viewport]);
+
+  const handleAddClick = (e) => {
+    console.log(e)
+    const [long, lat] = e.lngLat;
+    setNewPlace({
+      lat,
+      long
+    });
+  };
+
   return (
     <div>
       <Map
@@ -59,7 +74,9 @@ const SearchableMap = () => {
         mapStyle='mapbox://styles/mapbox/outdoors-v11'
         width='100%'
         height='100vh'
+        dragPan= {true}
         onViewportChange={setViewPort}
+        onDblClick = {handleAddClick}
         mapboxApiAccessToken={Geocoder.accessToken}
       >
 
@@ -81,15 +98,24 @@ const SearchableMap = () => {
           {showPopup && ( 
             <Popup className='popup' longitude={-100} latitude={40}
               anchor="bottom"
+              closeButton={false}
+              closeOnClick={true}
               onClose={() => setShowPopup(false)}>
+              <AiFillCloseCircle className='exitBtn' />
               <h3 className='pinName'>MIDDLE OF NOWHERE KANSAS</h3>
               <p className='pinDescription'> Treat yourself to a fun time in a corn field.</p>
               <h4>Reviews:</h4>
               <p className='review'>Kansas is just one big farm.</p>
-              <button className="addBtn">Add this pin to your list!</button>
+              {/* TODO: ADD HREF FOR BUTTON HERE */}
+              <button className="addBtn" href='#'>Add this pin to your list!</button>
+            </Popup>)}
+            </div>
 
-            {/* form for adding a pin */}
-            {/* <div className='add-pin'>
+              {/*TODO: NEED TO FINISH THIS UP FOR THE FORM -- EM  */}
+             {/* form for adding a pin */}
+            <div className='newplace-popup-container'>
+            {/* <Popup> */}
+           {/* <div className='add-pin'>
               <form className='pinForm' action="">
                 <label htmlFor="">Pin Name</label>
                 <input type="text" placeholder='Enter a name for your pin.' />
@@ -99,9 +125,10 @@ const SearchableMap = () => {
                 <input type="text" placeholder='Add your thoughts about this place."' />
                 <button className='submitBtn' type='submit'>Add pin to map!</button>
               </form>
-            </div> */}
-            </Popup>)}
+            </div>
+            </Popup> */}
         </div>
+        
         <NavigationControl className='navcontrol' />
         <ScaleControl className='scalecontrol'/>
         <GeolocateControl className ='geoControl'/>
