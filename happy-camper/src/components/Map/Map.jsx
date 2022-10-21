@@ -25,6 +25,8 @@ const SearchableMap = () => {
     zoom: 3.5,
     transitionDuration: 100,
   });
+
+  
   const [searchResultLayer, setSearchResult] = useState(null);
   const mapRef = useRef();
   const handleOnResult = (event) => {
@@ -48,6 +50,7 @@ const SearchableMap = () => {
       ...geocoderDefaultOverrides,
     });
   };
+
   useEffect(() => {
     console.log({ viewport });
   }, [viewport]);
@@ -61,6 +64,7 @@ const SearchableMap = () => {
         height='100vh'
         onViewportChange={setViewPort}
         mapboxApiAccessToken={Geocoder.accessToken}
+        dragPan= 'true'
       >
 
         <Geocoder
