@@ -1,3 +1,4 @@
+import './Login.css'
 import React, { useState} from 'react'
 import logo from '../../assets/vanlogo.png'
 import { Link } from 'react-router-dom'
@@ -46,7 +47,7 @@ const Login = (props) => {
 
     return (
         <div>
-            <div className='login-container'>
+            <div className='signup-container'>
 
 
 
@@ -79,7 +80,7 @@ const Login = (props) => {
                                 type="email"
                                 placeholder="email"
                                 name="email"
-                                value={formState.password}
+                                value={formState.email}
                                 onChange={handleChange}
                             />
 
