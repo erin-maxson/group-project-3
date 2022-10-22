@@ -44,7 +44,6 @@ export default function App() {
           {/* <Signup /> */}
           <Nav />
           <Header />
-          <Map />
           <Routes>
             <Route
               path="/"
