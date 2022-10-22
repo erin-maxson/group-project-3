@@ -37,20 +37,32 @@
     font-size: 16px;
 }
 
-.popup-newPlace form {
-    background: var(--color-bg) ;
-}
-
 .popup-newPlace input {
     font-size: 10px;
-    padding: 10px;
+    padding: 15px;
     margin: 10px 0px;
     cursor: inherit;
+    background-color: var(--color-bg);
 }
 
-input {
-    padding: 5px;
-    cursor: inherit;
+.submitBtn {
+    background-color: var(--color-bg-variant);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 30px;
+    color: var(--color-bg);
+    margin: auto;
+    width: 80%;
+    font-size: 14px;
+}
+
+.submitBtn:hover {
+    background-color: var(--color-primary);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 30px;
+    color: var(--color-bg);
+
 }
 
 /* Navigation Control */
