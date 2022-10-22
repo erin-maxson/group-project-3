@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.0",
+    "@apollo/react-hooks": "^4.0.0",
     "apollo-server-express": "^3.10.3",
     "bcrypt": "^5.1.0",
     "deck.gl": "^8.8.13",
