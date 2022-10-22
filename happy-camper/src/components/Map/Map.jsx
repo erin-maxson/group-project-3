@@ -98,10 +98,9 @@ const SearchableMap = () => {
           {showPopup && ( 
             <Popup className='popup' longitude={-100} latitude={40}
               anchor="bottom"
-              closeButton={false}
+              closeButton={true}
               closeOnClick={true}
               onClose={() => setShowPopup(false)}>
-              <AiFillCloseCircle className='exitBtn' />
               <h3 className='pinName'>MIDDLE OF NOWHERE KANSAS</h3>
               <p className='pinDescription'> Treat yourself to a fun time in a corn field.</p>
               <h4>Reviews:</h4>
