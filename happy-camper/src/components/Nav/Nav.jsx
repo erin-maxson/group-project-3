@@ -1,16 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Nav.css'
+import { Link } from 'react-router-dom'
+import Auth from '../../utils/auth';
+
+
 
 const Nav = () => {
-  return (
-    <nav className='container.nav_container'>
-        <a className='signup' href="#Signup">Signup</a>
-        <a className='login' href="#Login">Login</a>
+  
+  const logout = (event) => {
+    event.preventDefault();
+    Auth.logout();
+  };
+  return(
+  <nav>
+    {Auth.loggedIn() ? (
+      <>
+        <Link className="login" to="/" onClick={logout}>Logout</Link>
 
-        {/* TODO: FINISH LOGOUT */}
-        {/* <a className='logout' href="#Logout">Logout</a> */}
-    </nav>
+      </>
+    ) : (
+      <>
+        <Link className='signup' to="/signup">
+          Signup
+        </Link>
+        <Link className="login" to="/login">
+          Login
+        </Link>
+
+      </>
+    )}
+  </nav>
+
   )
+
+
 }
+
+
 
 export default Nav
