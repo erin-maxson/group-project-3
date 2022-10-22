@@ -8,6 +8,9 @@ import Geocoder from 'react-map-gl-geocoder';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { AiFillCloseCircle } from 'react-icons/ai'
 import * as React from 'react'
+import { QUERY_LOCATIONS, QUERY_ME, QUERY_LOCATION } from '../../utils/queries'
+// import { ApolloClient, useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/react-hooks'
 
 /*
 import {KANSAS} from '../../assets/kansas.jpg'
@@ -53,9 +56,10 @@ const SearchableMap = () => {
     });
   };
 
-  useEffect(() => {
-    console.log({ viewport });
-  }, [viewport]);
+
+  const { loading, data } = useQuery(QUERY_LOCATIONS)
+  const pins = data?.locations || []
+  console.log(pins)
 
   const handleAddClick = (e) => {
     console.log(e)
@@ -79,6 +83,26 @@ const SearchableMap = () => {
         onDblClick={handleAddClick}
         mapboxApiAccessToken={Geocoder.accessToken}
       >
+        {pins.map(p => (
+          <div className="otherUserMarkers" key={p._id}>
+            <Marker longitude={p.longitude} latitude={p.latitude} anchor="bottom" >
+              <FaMapMarkerAlt style={{ fontSize: viewport.zoom * 7, color: '#f39200' }} />
+            </Marker>
+            {/* <Popup className='popup' longitude={p.longitude} latitude={p.latitude}
+              anchor="bottom"
+              closeButton={true}
+              closeOnClick={true}
+              onClose={() => setShowPopup(false)}>
+              <div className='popup-container'>
+                <h3 className='pinName'>{p.title}</h3>
+                <p className='pinDescription'>{p.description}</p>
+                <h4>Reviews:</h4>
+                <p className='review'>{p.rating}/5 stars</p>
+                <button className="addBtn" href='#'>Update this pin!</button>
+              </div>
+            </Popup> */}
+          </div>
+        ))}
 
         <Geocoder
           mapRef={mapRef}
@@ -88,47 +112,30 @@ const SearchableMap = () => {
           position='top-left'
         />
 
-        <div className="otherUserMarkers">
-          <Marker longitude={-100} latitude={40} anchor="bottom" >
-            <FaMapMarkerAlt style={{ fontSize: viewport.zoom * 7, color: '#f39200' }} />
-          </Marker>
-        </div>
 
-      {/* This works, but need to hide it for now until I get the secondary popup working - EM */}
-        {/* <Popup className='popup' longitude={-100} latitude={40}
+
+        {/* This works, but need to hide it for now until I get the secondary popup working - EM */}
+
+
+        {/*TODO: NEED TO FINISH THIS UP FOR THE FORM -- EM  */}
+        {/* form for adding a pin */}
+        {newPlace && <Popup className='popup-newPlace' longitude={-100} latitude={200}
           anchor="bottom"
           closeButton={true}
           closeOnClick={true}
           onClose={() => setShowPopup(false)}>
-          <div className='popup-container'>
-            <h3 className='pinName'>MIDDLE OF NOWHERE KANSAS</h3>
-            <p className='pinDescription'> Treat yourself to a fun time in a corn field.</p>
-            <h4>Reviews:</h4>
-            <p className='review'>Kansas is just one big farm.</p>
-            {/* TODO: ADD HREF FOR BUTTON HERE */}
-            {/* <button className="addBtn" href='#'>Add this pin to your list!</button>
+          <div className='add-pin'>
+            <form className='pinForm' action="">
+              <label htmlFor="">Pin Name</label>
+              <input type="text" placeholder='Enter a name for your pin.' />
+              <label htmlFor="">Pin Description</label>
+              <input type="text" placeholder='Enter a short description for your pin.' />
+              <label htmlFor="">Leave a Review</label>
+              <input type="text" placeholder='Add your thoughts about this place."' />
+              <button className='submitBtn' type='submit'>Add pin to map!</button>
+            </form>
           </div>
-        </Popup> */}
-
-        {/*TODO: NEED TO FINISH THIS UP FOR THE FORM -- EM  */}
-        {/* form for adding a pin */}
-          {newPlace && <Popup className='popup-newPlace' longitude={-100} latitude={200}
-            anchor="bottom"
-            closeButton={true}
-            closeOnClick={true}
-            onClose={() => setShowPopup(false)}>
-            <div className='add-pin'>
-              <form className='pinForm' action="">
-                <label htmlFor="">Pin Name</label>
-                <input type="text" placeholder='Enter a name for your pin.' />
-                <label htmlFor="">Pin Description</label>
-                <input type="text" placeholder='Enter a short description for your pin.' />
-                <label htmlFor="">Leave a Review</label>
-                <input type="text" placeholder='Add your thoughts about this place."' />
-                <button className='submitBtn' type='submit'>Add pin to map!</button>
-              </form>
-            </div>
-          </Popup>}
+        </Popup>}
 
         <NavigationControl className='navcontrol' />
         <ScaleControl className='scalecontrol' />
