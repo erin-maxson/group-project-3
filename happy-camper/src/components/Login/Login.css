@@ -40,11 +40,12 @@ input {
 .signupBtn {
     background-color: var(--color-bg-variant);
     padding: 10px;
+    margin: 10px;
     border-radius: 30px;
     color: var(--color-bg);
     margin: auto;
-    width: 50%;
-    font-size: 16px;
+    width: 80%;
+    font-size: 14px;
 
 }
 

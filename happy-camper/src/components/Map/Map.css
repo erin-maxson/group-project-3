@@ -25,14 +25,32 @@
 
 /* Pin Popup Form */
 
-.pinform {
-    width: 250px;
-    text-align: center;
+.popup-newPlace {
     z-index: 2;
+    width: 250px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    font-size: 16px;
+}
+
+.popup-newPlace form {
+    background: var(--color-bg) ;
+}
+
+.popup-newPlace input {
+    font-size: 10px;
+    padding: 10px;
+    margin: 10px 0px;
+    cursor: inherit;
 }
 
 input {
     padding: 5px;
+    cursor: inherit;
 }
 
 /* Navigation Control */
