@@ -59,7 +59,7 @@ const SearchableMap = () => {
 
   const { loading, data } = useQuery(QUERY_LOCATIONS)
   const pins = data?.locations || []
-  console.log(pins)
+  // console.log(pins)
 
   const handleAddClick = (e) => {
     console.log(e)
@@ -71,7 +71,6 @@ const SearchableMap = () => {
   };
 
   return (
-    <div>
       <Map
         ref={mapRef}
         {...viewport}
@@ -141,9 +140,8 @@ const SearchableMap = () => {
         <ScaleControl className='scalecontrol' />
         <GeolocateControl className='geoControl' />
       </Map>
-      <DeckGL {...viewport} layers={[searchResultLayer]} />
-    </div>
   );
 };
-
+  {/* <DeckGL {...viewport} layers={[searchResultLayer]} /> */}
+    {/* </div> */}
 export default SearchableMap;
