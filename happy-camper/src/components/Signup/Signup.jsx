@@ -44,7 +44,9 @@ const Signup = () => {
     <div>
       <div className='signup-container'>
         <div>
-          <AiFillCloseCircle />
+          <Link to="/">
+            <AiFillCloseCircle />
+          </Link>
         </div>
         <div className='logo'>
           <img src={logo} alt='small van logo' />
