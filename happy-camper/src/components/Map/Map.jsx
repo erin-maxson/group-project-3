@@ -98,7 +98,7 @@ const SearchableMap = () => {
                 <p className='review'>{p.rating}/5 stars</p>
                 <button className="addBtn" href='#'>Update this pin!</button>
               </div>
-            </Popup> 
+            </Popup>
           </div>
         ))}
 

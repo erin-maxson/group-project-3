@@ -1,6 +1,7 @@
 import './Signup.css';
 import logo from '../../assets/vanlogo.png';
 // import { Cancel, Room } from '@material-ui/icons';
+import Map from '../Map/Map'
 import React, { useRef, useState } from 'react';
 import Auth from '../../utils/auth';
 import { Link } from 'react-router-dom';
@@ -42,6 +43,7 @@ const Signup = () => {
 
   return (
     <div>
+       <Map />
       <div className='signup-container'>
         <div>
           <Link to="/">

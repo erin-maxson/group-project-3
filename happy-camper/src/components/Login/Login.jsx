@@ -1,4 +1,5 @@
 import './Login.css'
+import Map from '../Map/Map'
 import React, { useState } from 'react'
 import logo from '../../assets/vanlogo.png'
 import { Link } from 'react-router-dom'
@@ -47,6 +48,7 @@ const Login = (props) => {
 
     return (
         <div>
+                 <Map />
             <div className='signup-container'>
 
                 <div>
