@@ -20,7 +20,7 @@ Geocoder.accessToken = 'pk.eyJ1IjoiYWlybWF4MTQiLCJhIjoiY2w4amZrbXhvMDY4ODN3bzJtb
 //query for getaccesstoken (keep token serverside for security)
 
 const SearchableMap = () => {
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
   const [viewport, setViewPort] = useState({
     latitude: 47.1164,
@@ -82,14 +82,16 @@ const SearchableMap = () => {
       >
         {pins.map(p => (
           <div className="otherUserMarkers" key={p._id}>
-            <Marker longitude={p.longitude} latitude={p.latitude} anchor="bottom" onClick={setShowPopup(true)}>
+            <Marker longitude={p.longitude} latitude={p.latitude} anchor="bottom" onClick={e =>{
+              setShowPopup(true)
+            }}>
               <FaMapMarkerAlt style={{ fontSize: viewport.zoom * 7, color: '#f39200' }} />
             </Marker>
             {showPopup && (<Popup className='popup' longitude={p.longitude} latitude={p.latitude}
               anchor="bottom"
               closeButton={true}
               closeOnClick={true}
-              onClose={() => setShowPopup(false)}>
+              onClose={() => setShowPopup(null)}>
               <div className='popup-container'>
                 <h3 className='pinName'>{p.title}</h3>
                 <p className='pinDescription'>{p.description}</p>
