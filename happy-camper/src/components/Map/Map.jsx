@@ -10,6 +10,7 @@ import * as React from 'react'
 import { QUERY_LOCATIONS, QUERY_ME, QUERY_LOCATION } from '../../utils/queries'
 // import { ApolloClient, useQuery } from '@apollo/client';
 import { useQuery, useMutation } from '@apollo/react-hooks'
+import { ADD_LOCATION } from '../../utils/mutations'
 /*
 import {KANSAS} from '../../assets/kansas.jpg'
 
@@ -59,6 +60,32 @@ const SearchableMap = () => {
   const pins = data?.locations || []
   // console.log(pins)
 
+  const [SaveLocation, { error }] = useMutation(ADD_LOCATION, {
+    update(cache, { data: {SaveLocation} }) {
+      try {
+        const { locations } = cache.readQuery({ query: QUERY_LOCATIONS });
+
+        cache.writeQuery({
+          query: QUERY_LOCATIONS,
+          data: { locations: [SaveLocation, ...locations] },
+        });
+      }
+      catch (e) {
+        console.error(e);
+      }
+
+      const { me } = cache.readQuery({ query: QUERY_ME });
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: { me: { ...me, locations: [...me.locations, SaveLocation] } }
+      });
+    },
+  });
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault
+  }
+
   const handleAddClick = (e) => {
     console.log(e)
     const [long, lat] = e.lngLat;
@@ -67,7 +94,7 @@ const SearchableMap = () => {
       long
     });
   };
-
+  
   return (
       <Map
         ref={mapRef}
@@ -122,7 +149,7 @@ const SearchableMap = () => {
           closeOnClick={false}
           onClose={() => setNewPlace(false)}>
           <div className='add-pin'>
-            <form className='pinForm' action="">
+            <form className='pinForm' onSubmit={}>
               <label htmlFor="">Pin Name</label>
               <input type="text" placeholder='Enter a pin name.' />
               <label htmlFor="">Pin Description</label>
