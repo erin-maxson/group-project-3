@@ -20,7 +20,7 @@ Geocoder.accessToken = 'pk.eyJ1IjoiYWlybWF4MTQiLCJhIjoiY2w4amZrbXhvMDY4ODN3bzJtb
 //query for getaccesstoken (keep token serverside for security)
 
 const SearchableMap = () => {
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(true);
   const [newPlace, setNewPlace] = useState(null);
   const [viewport, setViewPort] = useState({
     latitude: 47.1164,
