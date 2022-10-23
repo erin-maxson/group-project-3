@@ -10,7 +10,6 @@ import * as React from 'react'
 import { QUERY_LOCATIONS, QUERY_ME, QUERY_LOCATION } from '../../utils/queries'
 // import { ApolloClient, useQuery } from '@apollo/client';
 import { useQuery, useMutation } from '@apollo/react-hooks'
-
 /*
 import {KANSAS} from '../../assets/kansas.jpg'
 
