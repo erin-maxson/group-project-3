@@ -1,10 +1,10 @@
 import './Login.css'
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import logo from '../../assets/vanlogo.png'
 import { Link } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { LOGIN } from '../../utils/mutations'
-
+import { AiFillCloseCircle } from 'react-icons/ai'
 
 import Auth from '../../utils/auth'
 
@@ -49,7 +49,9 @@ const Login = (props) => {
         <div>
             <div className='signup-container'>
 
-
+                <div>
+                    <AiFillCloseCircle />
+                </div>
 
                 <div className='logo'>
                     <img src={logo} alt='small van logo' />
