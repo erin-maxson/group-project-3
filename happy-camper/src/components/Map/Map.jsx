@@ -10,7 +10,6 @@ import * as React from 'react'
 import { QUERY_LOCATIONS, QUERY_ME, QUERY_LOCATION } from '../../utils/queries'
 // import { ApolloClient, useQuery } from '@apollo/client';
 import { useQuery, useMutation } from '@apollo/react-hooks'
-
 /*
 import {KANSAS} from '../../assets/kansas.jpg'
 
@@ -118,19 +117,19 @@ const SearchableMap = () => {
 
         {/*TODO: NEED TO FINISH THIS UP FOR THE FORM -- EM  */}
         {/* form for adding a pin */}
-        {newPlace && <Popup className='popup-newPlace' longitude={-100} latitude={200}
+        {newPlace && <Popup className='popup-newPlace' longitude={newPlace.long} latitude={newPlace.lat}
           anchor="bottom"
           closeButton={true}
-          closeOnClick={true}
-          onClose={() => setShowPopup(false)}>
+          closeOnClick={false}
+          onClose={() => setNewPlace(false)}>
           <div className='add-pin'>
             <form className='pinForm' action="">
               <label htmlFor="">Pin Name</label>
-              <input type="text" placeholder='Enter a name for your pin.' />
+              <input type="text" placeholder='Enter a pin name.' />
               <label htmlFor="">Pin Description</label>
-              <input type="text" placeholder='Enter a short description for your pin.' />
+              <input type="text" placeholder='Enter a description.' />
               <label htmlFor="">Leave a Review</label>
-              <input type="text" placeholder='Add your thoughts about this place."' />
+              <input type="text" placeholder='Leave a star rating.' />
               <button className='submitBtn' type='submit'>Add pin to map!</button>
             </form>
           </div>
