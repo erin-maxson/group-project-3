@@ -21,7 +21,7 @@ Geocoder.accessToken = 'pk.eyJ1IjoiYWlybWF4MTQiLCJhIjoiY2w4amZrbXhvMDY4ODN3bzJtb
 //query for getaccesstoken (keep token serverside for security)
 
 const SearchableMap = () => {
-  const [showPopup, setShowPopup] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
   const [newPlace, setNewPlace] = useState(null);
   const [viewport, setViewPort] = useState({
     latitude: 47.1164,
@@ -83,10 +83,10 @@ const SearchableMap = () => {
       >
         {pins.map(p => (
           <div className="otherUserMarkers" key={p._id}>
-            <Marker longitude={p.longitude} latitude={p.latitude} anchor="bottom" >
+            <Marker longitude={p.longitude} latitude={p.latitude} anchor="bottom" onClick={setShowPopup(true)}>
               <FaMapMarkerAlt style={{ fontSize: viewport.zoom * 7, color: '#f39200' }} />
             </Marker>
-            <Popup className='popup' longitude={p.longitude} latitude={p.latitude}
+            {showPopup && (<Popup className='popup' longitude={p.longitude} latitude={p.latitude}
               anchor="bottom"
               closeButton={true}
               closeOnClick={true}
@@ -98,7 +98,8 @@ const SearchableMap = () => {
                 <p className='review'>{p.rating}/5 stars</p>
                 <button className="addBtn" href='#'>Update this pin!</button>
               </div>
-            </Popup>
+            </Popup>)}
+            
           </div>
         ))}
 
