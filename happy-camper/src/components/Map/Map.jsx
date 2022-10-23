@@ -1,7 +1,7 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './Map.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import Map, { Popup, Marker, NavigationControl, ScaleControl, GeolocateControl } from 'react-map-gl';
 import DeckGL, { GeoJsonLayer } from 'deck.gl';
 import Geocoder from 'react-map-gl-geocoder';
@@ -54,10 +54,28 @@ const SearchableMap = () => {
     });
   };
 
-
+  // query for pins, then put them into dataPins array
   const { loading, data } = useQuery(QUERY_LOCATIONS)
-  const pins = data?.locations || []
-  // console.log(pins)
+  const dataPins = data?.locations || []
+
+  // map the pins out into markers using the pin data
+  const pins = useMemo(
+    () =>
+      dataPins.map((pin) => (
+        <Marker
+          key={pin._id}
+          longitude={pin.longitude}
+          latitude={pin.latitude}
+          anchor="bottom"
+          onClick={e => {
+            setShowPopup(pin);
+          }}
+        >
+          <FaMapMarkerAlt style={{ fontSize: viewport.zoom * 7, color: '#f39200' }} />
+        </Marker>
+      )),
+    [dataPins]
+  );
 
   const handleAddClick = (e) => {
     console.log(e)
@@ -69,80 +87,77 @@ const SearchableMap = () => {
   };
 
   return (
-      <Map
-        ref={mapRef}
-        {...viewport}
-        mapStyle='mapbox://styles/mapbox/outdoors-v11'
-        width='100%'
-        height='100vh'
-        dragPan={true}
-        onViewportChange={setViewPort}
-        onDblClick={handleAddClick}
-        mapboxApiAccessToken={Geocoder.accessToken}
-      >
-        {pins.map(p => (
-          <div className="otherUserMarkers" key={p._id}>
-            <Marker longitude={p.longitude} latitude={p.latitude} anchor="bottom" onClick={e =>{
-              setShowPopup(true)
-            }}>
-              <FaMapMarkerAlt style={{ fontSize: viewport.zoom * 7, color: '#f39200' }} />
-            </Marker>
-            {showPopup && (<Popup className='popup' longitude={p.longitude} latitude={p.latitude}
-              anchor="bottom"
-              closeButton={true}
-              closeOnClick={true}
-              onClose={() => setShowPopup(null)}>
-              <div className='popup-container'>
-                <h3 className='pinName'>{p.title}</h3>
-                <p className='pinDescription'>{p.description}</p>
-                <h4>Reviews:</h4>
-                <p className='review'>{p.rating}/5 stars</p>
-                <button className="addBtn" href='#'>Update this pin!</button>
-              </div>
-            </Popup>)}
-            
-          </div>
-        ))}
+    <Map
+      ref={mapRef}
+      {...viewport}
+      mapStyle='mapbox://styles/mapbox/outdoors-v11'
+      width='100%'
+      height='100vh'
+      dragPan={true}
+      onViewportChange={setViewPort}
+      onDblClick={handleAddClick}
+      mapboxApiAccessToken={Geocoder.accessToken}
+    >
 
-        <Geocoder
-          mapRef={mapRef}
-          onResult={handleOnResult}
-          onViewportChange={handleGeocoderViewportChange}
-          mapboxApiAccessToken={Geocoder.accessToken}
-          position='top-left'
-        />
+      {pins}
 
-
-
-        {/* This works, but need to hide it for now until I get the secondary popup working - EM */}
-
-
-        {/*TODO: NEED TO FINISH THIS UP FOR THE FORM -- EM  */}
-        {/* form for adding a pin */}
-        {newPlace && <Popup className='popup-newPlace' longitude={newPlace.long} latitude={newPlace.lat}
+      {showPopup && (
+        <Popup
+          className='popup'
+          longitude={Number(showPopup.longitude)}
+          latitude={Number(showPopup.latitude)}
           anchor="bottom"
           closeButton={true}
-          closeOnClick={false}
-          onClose={() => setNewPlace(false)}>
-          <div className='add-pin'>
-            <form className='pinForm' action="">
-              <label htmlFor="">Pin Name</label>
-              <input type="text" placeholder='Enter a pin name.' />
-              <label htmlFor="">Pin Description</label>
-              <input type="text" placeholder='Enter a description.' />
-              <label htmlFor="">Leave a Review</label>
-              <input type="text" placeholder='Leave a star rating.' />
-              <button className='submitBtn' type='submit'>Add pin to map!</button>
-            </form>
+          closeOnClick={true}
+          onClose={() => setShowPopup(null)}>
+          <div className='popup-container'>
+            <h3 className='pinName'>{showPopup.title}</h3>
+            <p className='pinDescription'>{showPopup.description}</p>
+            <h4>Reviews:</h4>
+            <p className='review'>{showPopup.rating}/5 stars</p>
+            <button className="addBtn" href='#'>Update this pin!</button>
           </div>
-        </Popup>}
+        </Popup>)}
 
-        <NavigationControl className='navcontrol' />
-        <ScaleControl className='scalecontrol' />
-        <GeolocateControl className='geoControl' />
-      </Map>
+      <Geocoder
+        mapRef={mapRef}
+        onResult={handleOnResult}
+        onViewportChange={handleGeocoderViewportChange}
+        mapboxApiAccessToken={Geocoder.accessToken}
+        position='top-left'
+      />
+
+
+
+      {/* This works, but need to hide it for now until I get the secondary popup working - EM */}
+
+
+      {/*TODO: NEED TO FINISH THIS UP FOR THE FORM -- EM  */}
+      {/* form for adding a pin */}
+      {newPlace && <Popup className='popup-newPlace' longitude={newPlace.long} latitude={newPlace.lat}
+        anchor="bottom"
+        closeButton={true}
+        closeOnClick={false}
+        onClose={() => setNewPlace(false)}>
+        <div className='add-pin'>
+          <form className='pinForm' action="">
+            <label htmlFor="">Pin Name</label>
+            <input type="text" placeholder='Enter a pin name.' />
+            <label htmlFor="">Pin Description</label>
+            <input type="text" placeholder='Enter a description.' />
+            <label htmlFor="">Leave a Review</label>
+            <input type="text" placeholder='Leave a star rating.' />
+            <button className='submitBtn' type='submit'>Add pin to map!</button>
+          </form>
+        </div>
+      </Popup>}
+
+      <NavigationControl className='navcontrol' />
+      <ScaleControl className='scalecontrol' />
+      <GeolocateControl className='geoControl' />
+    </Map>
   );
 };
-  {/* <DeckGL {...viewport} layers={[searchResultLayer]} /> */}
-    {/* </div> */}
+{/* <DeckGL {...viewport} layers={[searchResultLayer]} /> */ }
+{/* </div> */ }
 export default SearchableMap;
