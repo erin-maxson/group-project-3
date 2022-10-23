@@ -10,8 +10,8 @@ import * as React from 'react'
 import { QUERY_LOCATIONS, QUERY_ME, QUERY_LOCATION } from '../../utils/queries'
 // import { ApolloClient, useQuery } from '@apollo/client';
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import { useMutation } from '@apollo/client'
-import { ADD_LOCATION } from '../../utils/mutations'
+import { REMOVE_LOCATION } from '../../utils/mutations'
+
 /*
 import {KANSAS} from '../../assets/kansas.jpg'
 
@@ -63,13 +63,34 @@ const SearchableMap = () => {
 
   const handleAddClick = (e) => {
     console.log(e)
-    const [saveLocation, { error, data }] = useMutation(ADD_LOCATION)
+    const [long, lat] = e.lngLat;
     setNewPlace({
       lat,
       long
     });
   };
+  const [RemoveLocation, {error}] = useMutation(REMOVE_LOCATION, {
+    update(cache, { data: {removeLocation}}) {
+      try {
+        cache.writeQuery({
+          query: QUERY_ME,
+          data: {me: removeLocation}
+        })
+      } catch(e) {
+        console.errore(e)
+      }
+    }
+  })
 
+  const handleRemoveLocation = async (locationId) => {
+    try {
+      const {data} = await RemoveLocation({
+        vaiables: {locationId}
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   return (
       <Map
@@ -88,7 +109,7 @@ const SearchableMap = () => {
             <Marker longitude={p.longitude} latitude={p.latitude} anchor="bottom" >
               <FaMapMarkerAlt style={{ fontSize: viewport.zoom * 7, color: '#f39200' }} />
             </Marker>
-            {/* <Popup className='popup' longitude={p.longitude} latitude={p.latitude}
+            <Popup className='popup' longitude={p.longitude} latitude={p.latitude}
               anchor="bottom"
               closeButton={true}
               closeOnClick={true}
@@ -99,9 +120,9 @@ const SearchableMap = () => {
                 <h4>Reviews:</h4>
                 <p className='review'>{p.rating}/5 stars</p>
                 <button className="addBtn" href='#'>Update this pin!</button>
-                <button className="addBtn" href='#' onClick={}>Delete this pin!</button>
+                <button className="addBtn" href='#' onClick={() => handleRemoveLocation(p.Id)}>Delete this pin!</button>
               </div>
-            </Popup> */}
+            </Popup> 
           </div>
         ))}
 
