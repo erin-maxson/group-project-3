@@ -11,7 +11,7 @@ import * as React from 'react'
 import { QUERY_LOCATIONS, QUERY_ME, QUERY_LOCATION } from '../../utils/queries'
 // import { ApolloClient, useQuery } from '@apollo/client';
 import { useQuery, useMutation } from '@apollo/react-hooks'
-
+import Pin from '../Pin/Popup'
 /*
 import {KANSAS} from '../../assets/kansas.jpg'
 
@@ -88,6 +88,7 @@ const SearchableMap = () => {
             <Marker longitude={p.longitude} latitude={p.latitude} anchor="bottom" >
               <FaMapMarkerAlt style={{ fontSize: viewport.zoom * 7, color: '#f39200' }} />
             </Marker>
+            <Pin/>
             {/* <Popup className='popup' longitude={p.longitude} latitude={p.latitude}
               anchor="bottom"
               closeButton={true}
