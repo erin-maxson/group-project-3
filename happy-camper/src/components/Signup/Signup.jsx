@@ -4,7 +4,7 @@ import logo from '../../assets/vanlogo.png';
 import React, { useRef, useState } from 'react';
 import Auth from '../../utils/auth';
 import { Link } from 'react-router-dom';
-
+import { AiFillCloseCircle } from 'react-icons/ai'
 import { ADD_USER } from '../../utils/mutations';
 import { useMutation } from '@apollo/client';
 
@@ -43,6 +43,9 @@ const Signup = () => {
   return (
     <div>
       <div className='signup-container'>
+        <div>
+          <AiFillCloseCircle />
+        </div>
         <div className='logo'>
           <img src={logo} alt='small van logo' />
         </div>
@@ -85,7 +88,7 @@ const Signup = () => {
             </form>
           )}
         </div>
-        
+
         {error && (
           <div>
             {error.message}

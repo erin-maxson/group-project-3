@@ -6,7 +6,6 @@ import Map, { Popup, Marker, NavigationControl, ScaleControl, GeolocateControl }
 import DeckGL, { GeoJsonLayer } from 'deck.gl';
 import Geocoder from 'react-map-gl-geocoder';
 import { FaMapMarkerAlt } from 'react-icons/fa';
-import { AiFillCloseCircle } from 'react-icons/ai'
 import * as React from 'react'
 import { QUERY_LOCATIONS, QUERY_ME, QUERY_LOCATION } from '../../utils/queries'
 // import { ApolloClient, useQuery } from '@apollo/client';
@@ -59,7 +58,7 @@ const SearchableMap = () => {
 
   const { loading, data } = useQuery(QUERY_LOCATIONS)
   const pins = data?.locations || []
-  console.log(pins)
+  // console.log(pins)
 
   const handleAddClick = (e) => {
     console.log(e)
@@ -71,7 +70,6 @@ const SearchableMap = () => {
   };
 
   return (
-    <div>
       <Map
         ref={mapRef}
         {...viewport}
@@ -142,9 +140,8 @@ const SearchableMap = () => {
         <ScaleControl className='scalecontrol' />
         <GeolocateControl className='geoControl' />
       </Map>
-      <DeckGL {...viewport} layers={[searchResultLayer]} />
-    </div>
   );
 };
-
+  {/* <DeckGL {...viewport} layers={[searchResultLayer]} /> */}
+    {/* </div> */}
 export default SearchableMap;
