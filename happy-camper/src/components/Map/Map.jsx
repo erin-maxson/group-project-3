@@ -6,7 +6,6 @@ import Map, { Popup, Marker, NavigationControl, ScaleControl, GeolocateControl }
 import DeckGL, { GeoJsonLayer } from 'deck.gl';
 import Geocoder from 'react-map-gl-geocoder';
 import { FaMapMarkerAlt } from 'react-icons/fa';
-import { AiFillCloseCircle } from 'react-icons/ai'
 import * as React from 'react'
 import { QUERY_LOCATIONS, QUERY_ME, QUERY_LOCATION } from '../../utils/queries'
 // import { ApolloClient, useQuery } from '@apollo/client';
