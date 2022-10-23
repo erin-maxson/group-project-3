@@ -10,6 +10,8 @@ import * as React from 'react'
 import { QUERY_LOCATIONS, QUERY_ME, QUERY_LOCATION } from '../../utils/queries'
 // import { ApolloClient, useQuery } from '@apollo/client';
 import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
+import { ADD_LOCATION } from '../../utils/mutations'
 /*
 import {KANSAS} from '../../assets/kansas.jpg'
 
@@ -61,12 +63,13 @@ const SearchableMap = () => {
 
   const handleAddClick = (e) => {
     console.log(e)
-    const [long, lat] = e.lngLat;
+    const [saveLocation, { error, data }] = useMutation(ADD_LOCATION)
     setNewPlace({
       lat,
       long
     });
   };
+
 
   return (
       <Map
@@ -96,6 +99,7 @@ const SearchableMap = () => {
                 <h4>Reviews:</h4>
                 <p className='review'>{p.rating}/5 stars</p>
                 <button className="addBtn" href='#'>Update this pin!</button>
+                <button className="addBtn" href='#' onClick={}>Delete this pin!</button>
               </div>
             </Popup>
           </div>
