@@ -10,7 +10,8 @@ import * as React from 'react'
 import { QUERY_LOCATIONS, QUERY_ME, QUERY_LOCATION } from '../../utils/queries'
 // import { ApolloClient, useQuery } from '@apollo/client';
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import { ADD_LOCATION } from '../../utils/mutations'
+import { ADD_LOCATION, UPDATE_LOCATION } from '../../utils/mutations'
+import { set } from 'mongoose';
 /*
 import {KANSAS} from '../../assets/kansas.jpg'
 
@@ -61,13 +62,13 @@ const SearchableMap = () => {
   // console.log(pins)
 
   const [SaveLocation, { error }] = useMutation(ADD_LOCATION, {
-    update(cache, { data: {SaveLocation} }) {
+    update(cache, { data: {saveLocation} }) {
       try {
         const { locations } = cache.readQuery({ query: QUERY_LOCATIONS });
 
         cache.writeQuery({
           query: QUERY_LOCATIONS,
-          data: { locations: [SaveLocation, ...locations] },
+          data: { locations: [saveLocation, ...locations] },
         });
       }
       catch (e) {
@@ -77,14 +78,42 @@ const SearchableMap = () => {
       const { me } = cache.readQuery({ query: QUERY_ME });
       cache.writeQuery({
         query: QUERY_ME,
-        data: { me: { ...me, locations: [...me.locations, SaveLocation] } }
+        data: { me: { ...me, locations: [...me.locations, saveLocation] } }
       });
     },
   });
 
   const handleFormSubmit = async (event) => {
-    event.preventDefault
-  }
+    event.preventDefault();
+
+    try {
+      const { data } = await SaveLocation({
+        variables: {
+          title,
+          description,
+          rating
+        }
+      })
+
+      setTitleText('');
+      setDescription('');
+      setRating('');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === 'title') {
+      setTitleText(value);
+    } else if (name === 'description') {
+      setDescription(value);
+    } else {
+      setRating(value);
+    }
+  };
 
   const handleAddClick = (e) => {
     console.log(e)
@@ -149,13 +178,31 @@ const SearchableMap = () => {
           closeOnClick={false}
           onClose={() => setNewPlace(false)}>
           <div className='add-pin'>
-            <form className='pinForm' onSubmit={}>
+            <form className='pinForm' onSubmit={handleFormSubmit}>
               <label htmlFor="">Pin Name</label>
-              <input type="text" placeholder='Enter a pin name.' />
+              <input 
+                name='title'
+                value={title}
+                type="text" 
+                placeholder='Enter a pin name.' 
+                onChange={handleChange}
+              />
               <label htmlFor="">Pin Description</label>
-              <input type="text" placeholder='Enter a description.' />
+              <input 
+                name='description'
+                value={description}
+                type="text" 
+                placeholder='Enter a description.' 
+                onChange={handleChange}
+              />
               <label htmlFor="">Leave a Review</label>
-              <input type="text" placeholder='Leave a star rating.' />
+              <input 
+                name='rating'
+                value={rating}
+                type="int" 
+                placeholder='Enter a rating 1-5.' 
+                onChange={handleChange}
+              />
               <button className='submitBtn' type='submit'>Add pin to map!</button>
             </form>
           </div>

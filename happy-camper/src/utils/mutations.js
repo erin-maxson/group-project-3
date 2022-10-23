@@ -72,17 +72,17 @@ mutation SaveLocation($location: SaveLocationInput) {
 
 // `;
 
-// export const UPDATE_LOCATION = gql`
+export const UPDATE_LOCATION = gql`
 
-// mutation UpdateLocation($locationId: ID!, $newLocation: UpdateLocationInput) {
-//   updateLocation(locationId: $locationId, newLocation: $newLocation) {
-//     _id
-//     title
-//     description
-//     rating
-//     latitude
-//     longitude
-//   }
-// }
+mutation UpdateLocation($locationId: ID!, $newLocation: UpdateLocationInput) {
+  updateLocation(locationId: $locationId, newLocation: $newLocation) {
+    _id
+    title
+    description
+    rating
+    latitude
+    longitude
+  }
+}
 
-// `;
+`;
