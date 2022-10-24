@@ -85,7 +85,7 @@ const SearchableMap = () => {
   const handleRemoveLocation = async (locationId) => {
     try {
       const {data} = await RemoveLocation({
-        vaiables: {locationId}
+        variables: {locationId}
       })
     } catch (err) {
       console.error(err)
@@ -120,7 +120,7 @@ const SearchableMap = () => {
                 <h4>Reviews:</h4>
                 <p className='review'>{p.rating}/5 stars</p>
                 <button className="addBtn" href='#'>Update this pin!</button>
-                <button className="addBtn" href='#' onClick={() => handleRemoveLocation(p.Id)}>Delete this pin!</button>
+                <button className="addBtn" href='#' onClick={() => handleRemoveLocation(p._id)}>Delete this pin!</button>
               </div>
             </Popup> 
           </div>
@@ -154,7 +154,7 @@ const SearchableMap = () => {
               <input type="text" placeholder='Enter a description.' />
               <label htmlFor="">Leave a Review</label>
               <input type="text" placeholder='Leave a star rating.' />
-              <button className='submitBtn' type='submit'>Add pin to map!</button>
+              <button className='submitBtn' type='submit' >Add pin to map!</button>
             </form>
           </div>
         </Popup>}
