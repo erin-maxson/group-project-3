@@ -59,6 +59,60 @@ const SearchableMap = () => {
   const pins = data?.locations || []
   // console.log(pins)
 
+  const [SaveLocation, { error }] = useMutation(ADD_LOCATION, {
+    update(cache, { data: {saveLocation} }) {
+      try {
+        const { locations } = cache.readQuery({ query: QUERY_LOCATIONS });
+
+        cache.writeQuery({
+          query: QUERY_LOCATIONS,
+          data: { locations: [saveLocation, ...locations] },
+        });
+      }
+      catch (e) {
+        console.error(e);
+      }
+
+      const { me } = cache.readQuery({ query: QUERY_ME });
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: { me: { ...me, locations: [...me.locations, saveLocation] } }
+      });
+    },
+  });
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await SaveLocation({
+        variables: {
+          title,
+          description,
+          rating
+        }
+      })
+
+      setTitleText('');
+      setDescription('');
+      setRating('');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === 'title') {
+      setTitleText(value);
+    } else if (name === 'description') {
+      setDescription(value);
+    } else {
+      setRating(value);
+    }
+  };
+
   const handleAddClick = (e) => {
     console.log(e)
     const [long, lat] = e.lngLat;
@@ -123,13 +177,30 @@ const SearchableMap = () => {
           onClose={() => setNewPlace(false)}>
           <div className='add-pin'>
             <form className='pinForm' action="">
-              <label htmlFor="">Pin Name</label>
-              <input type="text" placeholder='Enter a pin name.' />
+            <label htmlFor="">Pin Name</label>
+              <input 
+                name='title'
+                value={title}
+                type="text" 
+                placeholder='Enter a pin name.' 
+                onChange={handleChange}
+              />
               <label htmlFor="">Pin Description</label>
-              <input type="text" placeholder='Enter a description.' />
+              <input 
+                name='description'
+                value={description}
+                type="text" 
+                placeholder='Enter a description.' 
+                onChange={handleChange}
+              />
               <label htmlFor="">Leave a Review</label>
-              <input type="text" placeholder='Leave a star rating.' />
-              <button className='submitBtn' type='submit'>Add pin to map!</button>
+              <input 
+                name='rating'
+                value={rating}
+                type="int" 
+                placeholder='Enter a rating 1-5.' 
+                onChange={handleChange}
+              />
             </form>
           </div>
         </Popup>}
