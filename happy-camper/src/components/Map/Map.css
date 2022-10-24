@@ -23,6 +23,14 @@
     border: 2px solid;
 }
 
+.addBtn:hover {
+    background-color: var(--color-bg-variant);
+    padding: 10px;
+    border-radius: 30px;
+    color: var(--color-bg);
+
+}
+
 /* Pin Popup Form */
 
 .popup-newPlace {
@@ -54,6 +62,7 @@
     margin: auto;
     width: 80%;
     font-size: 14px;
+    
 }
 
 .submitBtn:hover {

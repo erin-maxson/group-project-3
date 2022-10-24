@@ -10,6 +10,8 @@ import * as React from 'react'
 import { QUERY_LOCATIONS, QUERY_ME, QUERY_LOCATION } from '../../utils/queries'
 // import { ApolloClient, useQuery } from '@apollo/client';
 import { useQuery, useMutation } from '@apollo/react-hooks'
+import { REMOVE_LOCATION } from '../../utils/mutations'
+
 /*
 import {KANSAS} from '../../assets/kansas.jpg'
 
@@ -85,6 +87,29 @@ const SearchableMap = () => {
       long
     });
   };
+  const [RemoveLocation, {error}] = useMutation(REMOVE_LOCATION, {
+    update(cache, { data: {removeLocation}}) {
+      try {
+        cache.writeQuery({
+          query: QUERY_ME,
+          data: {me: removeLocation}
+        })
+      } catch(e) {
+        console.errore(e)
+      }
+    }
+  })
+
+  const handleRemoveLocation = async (locationId) => {
+    try {
+      const {data} = await RemoveLocation({
+        variables: {locationId}
+      })
+      window.location.reload()
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   return (
     <Map
@@ -116,6 +141,7 @@ const SearchableMap = () => {
             <h4>Reviews:</h4>
             <p className='review'>{showPopup.rating}/5 stars</p>
             <button className="addBtn" href='#'>Update this pin!</button>
+            <button className="addBtn" href='#' onClick={() => handleRemoveLocation(showPopup._id)}>Delete this pin!</button>
           </div>
         </Popup>)}
 
