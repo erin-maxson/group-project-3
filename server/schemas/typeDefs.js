@@ -40,12 +40,12 @@ const typeDefs = gql`
 
  
  input SaveLocationInput {
-    username: String!
-    title: String!
-    description: String!
-    rating: Int!
-    latitude: Float!
-    longitude: Float!
+    username: String
+    title: String
+    description: String
+    rating: Int
+    latitude: Float
+    longitude: Float
  }
 
  input UpdateLocationInput {

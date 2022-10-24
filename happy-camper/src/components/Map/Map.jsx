@@ -13,6 +13,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import { REMOVE_LOCATION } from '../../utils/mutations'
 import { ADD_LOCATION } from '../../utils/mutations'
 import Auth from '../../utils/auth'
+import { Link } from 'react-router-dom';
 /*
 import {KANSAS} from '../../assets/kansas.jpg'
 
@@ -80,8 +81,8 @@ const SearchableMap = () => {
     [dataPins]
   );
 
-  const [formState, setFormState] = useState({ title: '', description: '', rating: '' })
-  const [SaveLocation, { err, locationData }] = useMutation(ADD_LOCATION)
+  const [formState, setFormState] = useState({ title: '', description: '', rating: '', latitude: '', longitude:'' })
+  const [saveLocation, { err, locationData }] = useMutation(ADD_LOCATION)
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -96,13 +97,14 @@ const SearchableMap = () => {
     event.preventDefault();
 
     try {
-      const { data } = await SaveLocation({
+      const { data } = await saveLocation({
         variables: {
           ...formState
         }
+        
       })
-
-      Auth.login(data.login.token)
+      // window.location.reload()
+      Auth.login(data.saveLocation.token)
     } catch (error) {
       console.error(error);
     }
@@ -207,16 +209,61 @@ const SearchableMap = () => {
         closeOnClick={false}
         onClose={() => setNewPlace(false)}>
         <div className='add-pin'>
-          <form className='pinForm' action="">
-            <label htmlFor="">Pin Name</label>
-            <input type="text" placeholder='Enter a pin name.' />
-            <label htmlFor="">Pin Description</label>
-            <input type="text" placeholder='Enter a description.' />
-            <label htmlFor="">Leave a Review</label>
-            <input type="text" placeholder='Leave a star rating.' />
-            <button className='submitBtn' type='submit'>Add pin to map!</button>
-          </form>
+          {locationData ? (
+            <p>
+              Success! You may now head{' '}
+              <Link to="/">back to the homepage.</Link>
+            </p> ) : (
+              <form className='pinForm' onSubmit={handleFormSubmit}>
+              <label htmlFor="">Pin Name</label>
+              <input 
+                name='title'
+                type="text" 
+                value={formState.title}
+                placeholder='Enter a pin title.' 
+                onChange={handleChange}
+                />
+              <label htmlFor="">Pin Description</label>
+              <input 
+                name='description'
+                type="text" 
+                value={formState.description}
+                placeholder='Enter a description.' 
+                onChange={handleChange}
+                />
+              <label htmlFor="">Leave a Review</label>
+              <input 
+                name='rating'
+                type="number" 
+                value={formState.rating}
+                placeholder='Leave a rating' 
+                onChange={handleChange}
+                />
+              <input 
+                name='latitude'
+                type="number" 
+                value={formState.latitude}
+                placeholder='latitude' 
+                onChange={handleChange}
+                />
+              <input 
+                name='longitude'
+                type="number" 
+                value={formState.longitude}
+                placeholder='longitude' 
+                onChange={handleChange}
+                />
+              <button className='submitBtn' type='submit'>Add pin to map!</button>
+            </form>
+          )}
+          
         </div>
+
+        {err && (
+          <div>
+            {err.message}
+          </div>
+        )}
       </Popup>}
 
       <NavigationControl className='navcontrol' />
