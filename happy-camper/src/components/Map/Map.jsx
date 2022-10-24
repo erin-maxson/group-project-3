@@ -10,6 +10,8 @@ import * as React from 'react'
 import { QUERY_LOCATIONS, QUERY_ME, QUERY_LOCATION } from '../../utils/queries'
 // import { ApolloClient, useQuery } from '@apollo/client';
 import { useQuery, useMutation } from '@apollo/react-hooks'
+import Auth  from '../../utils/auth'
+import { ADD_LOCATION } from '../../utils/mutations'
 /*
 import {KANSAS} from '../../assets/kansas.jpg'
 
@@ -59,27 +61,17 @@ const SearchableMap = () => {
   const pins = data?.locations || []
   // console.log(pins)
 
-  const [SaveLocation, { error }] = useMutation(ADD_LOCATION, {
-    update(cache, { data: {saveLocation} }) {
-      try {
-        const { locations } = cache.readQuery({ query: QUERY_LOCATIONS });
+  const [formState, setFormState] = useState({ title: '', description: '', rating: '' })
+  const [SaveLocation, { error, locationData }] = useMutation(ADD_LOCATION)
 
-        cache.writeQuery({
-          query: QUERY_LOCATIONS,
-          data: { locations: [saveLocation, ...locations] },
-        });
-      }
-      catch (e) {
-        console.error(e);
-      }
+  const handleChange = (event) => {
+    const { name, value } = event.target
 
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      cache.writeQuery({
-        query: QUERY_ME,
-        data: { me: { ...me, locations: [...me.locations, saveLocation] } }
-      });
-    },
-  });
+    setFormState({
+      ...formState,
+      [name]: value,
+    })
+  }
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -87,31 +79,27 @@ const SearchableMap = () => {
     try {
       const { data } = await SaveLocation({
         variables: {
-          title,
-          description,
-          rating
+          ...formState
         }
       })
 
-      setTitleText('');
-      setDescription('');
-      setRating('');
+      Auth.login(data.login.token)
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target;
 
-    if (name === 'title') {
-      setTitleText(value);
-    } else if (name === 'description') {
-      setDescription(value);
-    } else {
-      setRating(value);
-    }
-  };
+  //   if (name === 'title') {
+  //     setTitleText(value);
+  //   } else if (name === 'description') {
+  //     setDescription(value);
+  //   } else {
+  //     setRating(value);
+  //   }
+  // };
 
   const handleAddClick = (e) => {
     console.log(e)
@@ -139,7 +127,7 @@ const SearchableMap = () => {
             <Marker longitude={p.longitude} latitude={p.latitude} anchor="bottom" >
               <FaMapMarkerAlt style={{ fontSize: viewport.zoom * 7, color: '#f39200' }} />
             </Marker>
-            {/* <Popup className='popup' longitude={p.longitude} latitude={p.latitude}
+            <Popup className='popup' longitude={p.longitude} latitude={p.latitude}
               anchor="bottom"
               closeButton={true}
               closeOnClick={true}
@@ -151,7 +139,7 @@ const SearchableMap = () => {
                 <p className='review'>{p.rating}/5 stars</p>
                 <button className="addBtn" href='#'>Update this pin!</button>
               </div>
-            </Popup> */}
+            </Popup>
           </div>
         ))}
 
@@ -176,11 +164,11 @@ const SearchableMap = () => {
           closeOnClick={false}
           onClose={() => setNewPlace(false)}>
           <div className='add-pin'>
-            <form className='pinForm' action="">
+            <form className='pinForm' onSubmit={handleFormSubmit}>
             <label htmlFor="">Pin Name</label>
               <input 
                 name='title'
-                value={title}
+                value={formState.title}
                 type="text" 
                 placeholder='Enter a pin name.' 
                 onChange={handleChange}
@@ -188,7 +176,7 @@ const SearchableMap = () => {
               <label htmlFor="">Pin Description</label>
               <input 
                 name='description'
-                value={description}
+                value={formState.description}
                 type="text" 
                 placeholder='Enter a description.' 
                 onChange={handleChange}
@@ -196,7 +184,7 @@ const SearchableMap = () => {
               <label htmlFor="">Leave a Review</label>
               <input 
                 name='rating'
-                value={rating}
+                value={formState.rating}
                 type="int" 
                 placeholder='Enter a rating 1-5.' 
                 onChange={handleChange}
