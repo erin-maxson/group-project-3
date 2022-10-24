@@ -61,16 +61,16 @@ mutation SaveLocation($location: SaveLocationInput) {
 
 
 
-// export const REMOVE_LOCATION = gql`
+export const REMOVE_LOCATION = gql`
 
 
-// mutation RemoveLocation($locationId: ID!) {
-//     removeLocation(locationId: $locationId) {
-//       _id
-//     }
-//   }
+mutation RemoveLocation($locationId: ID!) {
+    removeLocation(locationId: $locationId) {
+      _id
+    }
+  }
 
-// `;
+`;
 
 // export const UPDATE_LOCATION = gql`
 
