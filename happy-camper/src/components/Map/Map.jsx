@@ -87,6 +87,7 @@ const SearchableMap = () => {
       const {data} = await RemoveLocation({
         variables: {locationId}
       })
+      window.location.reload()
     } catch (err) {
       console.error(err)
     }
