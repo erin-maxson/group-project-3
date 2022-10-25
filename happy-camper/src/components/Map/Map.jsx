@@ -9,11 +9,13 @@ import { FaMapMarkerAlt } from 'react-icons/fa';
 import * as React from 'react'
 import { QUERY_LOCATIONS, QUERY_ME, QUERY_LOCATION } from '../../utils/queries'
 // import { ApolloClient, useQuery } from '@apollo/client';
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 import { REMOVE_LOCATION } from '../../utils/mutations'
 import { ADD_LOCATION } from '../../utils/mutations'
 import Auth from '../../utils/auth'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+
 /*
 import {KANSAS} from '../../assets/kansas.jpg'
 
@@ -32,7 +34,6 @@ const SearchableMap = () => {
     zoom: 3.5,
     transitionDuration: 100,
   });
-
 
   const [searchResultLayer, setSearchResult] = useState(null);
   const mapRef = useRef();
@@ -81,46 +82,8 @@ const SearchableMap = () => {
     [dataPins]
   );
 
-  const [formState, setFormState] = useState({ title: '', description: '', rating: '', latitude: '', longitude:'' })
-  const [saveLocation, { err, locationData }] = useMutation(ADD_LOCATION)
+  
 
-  const handleChange = (event) => {
-    const { name, value } = event.target
-
-    setFormState({
-      ...formState,
-      [name]: value,
-    })
-  }
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const { data } = await saveLocation({
-        variables: {
-          ...formState
-        }
-        
-      })
-      // window.location.reload()
-      Auth.login(data.saveLocation.token)
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // const handleChange = (event) => {
-  //   const { name, value } = event.target;
-
-  //   if (name === 'title') {
-  //     setTitleText(value);
-  //   } else if (name === 'description') {
-  //     setDescription(value);
-  //   } else {
-  //     setRating(value);
-  //   }
-  // };
 
   const handleAddClick = (e) => {
     console.log(e)
@@ -129,15 +92,17 @@ const SearchableMap = () => {
       lat,
       long
     });
+
   };
-  const [RemoveLocation, {error}] = useMutation(REMOVE_LOCATION, {
-    update(cache, { data: {removeLocation}}) {
+  
+  const [RemoveLocation, { error }] = useMutation(REMOVE_LOCATION, {
+    update(cache, { data: { removeLocation } }) {
       try {
         cache.writeQuery({
           query: QUERY_ME,
-          data: {me: removeLocation}
+          data: { me: removeLocation }
         })
-      } catch(e) {
+      } catch (e) {
         console.errore(e)
       }
     }
@@ -145,8 +110,8 @@ const SearchableMap = () => {
 
   const handleRemoveLocation = async (locationId) => {
     try {
-      const {data} = await RemoveLocation({
-        variables: {locationId}
+      const { data } = await RemoveLocation({
+        variables: { locationId }
       })
       window.location.reload()
     } catch (err) {
@@ -163,7 +128,6 @@ const SearchableMap = () => {
       height='100vh'
       dragPan={true}
       onViewportChange={setViewPort}
-      onDblClick={handleAddClick}
       mapboxApiAccessToken={Geocoder.accessToken}
     >
 
@@ -196,75 +160,6 @@ const SearchableMap = () => {
         position='top-left'
       />
 
-
-
-      {/* This works, but need to hide it for now until I get the secondary popup working - EM */}
-
-
-      {/*TODO: NEED TO FINISH THIS UP FOR THE FORM -- EM  */}
-      {/* form for adding a pin */}
-      {newPlace && <Popup className='popup-newPlace' longitude={newPlace.long} latitude={newPlace.lat}
-        anchor="bottom"
-        closeButton={true}
-        closeOnClick={false}
-        onClose={() => setNewPlace(false)}>
-        <div className='add-pin'>
-          {locationData ? (
-            <p>
-              Success! You may now head{' '}
-              <Link to="/">back to the homepage.</Link>
-            </p> ) : (
-              <form className='pinForm' onSubmit={handleFormSubmit}>
-              <label htmlFor="">Pin Name</label>
-              <input 
-                name='title'
-                type="text" 
-                value={formState.title}
-                placeholder='Enter a pin title.' 
-                onChange={handleChange}
-                />
-              <label htmlFor="">Pin Description</label>
-              <input 
-                name='description'
-                type="text" 
-                value={formState.description}
-                placeholder='Enter a description.' 
-                onChange={handleChange}
-                />
-              <label htmlFor="">Leave a Review</label>
-              <input 
-                name='rating'
-                type="number" 
-                value={formState.rating}
-                placeholder='Leave a rating' 
-                onChange={handleChange}
-                />
-              <input 
-                name='latitude'
-                type="number" 
-                value={formState.latitude}
-                placeholder='latitude' 
-                onChange={handleChange}
-                />
-              <input 
-                name='longitude'
-                type="number" 
-                value={formState.longitude}
-                placeholder='longitude' 
-                onChange={handleChange}
-                />
-              <button className='submitBtn' type='submit'>Add pin to map!</button>
-            </form>
-          )}
-          
-        </div>
-
-        {err && (
-          <div>
-            {err.message}
-          </div>
-        )}
-      </Popup>}
 
       <NavigationControl className='navcontrol' />
       <ScaleControl className='scalecontrol' />

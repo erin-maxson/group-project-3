@@ -40,12 +40,8 @@ mutation AddUser($username: String!, $email: String!, $password: String!) {
 
 export const ADD_LOCATION = gql`
 
-mutation SaveLocation($location: SaveLocationInput) {
-    saveLocation(location: $location) {
-      _id
-      username
-      email
-      savedLocations {
+mutation SaveLocation($username: String!, $title: String!, $description: String!, $rating: String!, $latitude: Float!, $longitude: Float!) {
+    saveLocation(username: $username, title: $title,  description: $description, rating: $rating, latitude: $latitude, longitude: $longitude ) {
         _id
         username
         title
@@ -53,7 +49,6 @@ mutation SaveLocation($location: SaveLocationInput) {
         rating
         latitude
         longitude
-      }
     }
   }
 `;

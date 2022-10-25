@@ -16,7 +16,7 @@ const typeDefs = gql`
       username: String
       title: String
       description: String
-      rating: Int
+      rating: String
       latitude: Float
       longitude: Float
 
@@ -43,7 +43,7 @@ const typeDefs = gql`
     username: String
     title: String
     description: String
-    rating: Int
+    rating: String
     latitude: Float
     longitude: Float
  }
@@ -51,7 +51,7 @@ const typeDefs = gql`
  input UpdateLocationInput {
     title: String
     description: String
-    rating: Int
+    rating: String
     latitude: Float
     longitude: Float
  }
@@ -59,7 +59,7 @@ const typeDefs = gql`
  type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    saveLocation(location: SaveLocationInput): User
+    saveLocation(username: String!, title: String!, description: String!, rating: String!, latitude: Float!, longitude: Float!): Location
     removeLocation(locationId: ID!): Location
     updateLocation(locationId: ID!, newLocation: UpdateLocationInput): Location
  }

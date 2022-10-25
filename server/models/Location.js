@@ -23,10 +23,8 @@ const locationSchema = new Schema(
             min: 4
         },
         rating: {
-            type: Number,
+            type: String,
             // require: true,
-            min: 0,
-            max: 5
         },
         latitude: {
             type: Number,
