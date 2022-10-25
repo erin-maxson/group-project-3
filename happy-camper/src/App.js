@@ -3,6 +3,7 @@ import Header from './components/Nav/Nav'
 import Nav from './components/Header/Header'
 import Signup from './components/Signup/Signup'
 import Login from './components/Login/Login'
+import Placer from './components/Location/Location'
 import Map from './components/Map/Map'
 import {
   ApolloClient,
@@ -56,6 +57,10 @@ export default function App() {
             <Route
               path="/login"
               element={<Login />}
+            />
+            <Route
+              path="/placer"
+              element={<Placer />}
             />
 
           </Routes>

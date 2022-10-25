@@ -5,7 +5,7 @@ const locationSchema = new Schema(
         username: {
             type: String,
             
-            required: true,
+            // required: true,
             trim: true,
             min: 2,
             max: 25,
@@ -13,28 +13,26 @@ const locationSchema = new Schema(
         },
         title: {
             type: String,
-            required: true,
+            // required: true,
             min: 2
 
         },
         description: {
             type: String,
-            required: true,
+            // required: true,
             min: 4
         },
         rating: {
-            type: Number,
-            require: true,
-            min: 0,
-            max: 5
+            type: String,
+            // require: true,
         },
         latitude: {
             type: Number,
-            require: true
+            // require: true
         },
         longitude: {
             type: Number,
-            require: true
+            // require: true
         }
     }
 )

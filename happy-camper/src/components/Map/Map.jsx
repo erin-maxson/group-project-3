@@ -9,8 +9,12 @@ import { FaMapMarkerAlt } from 'react-icons/fa';
 import * as React from 'react'
 import { QUERY_LOCATIONS, QUERY_ME, QUERY_LOCATION } from '../../utils/queries'
 // import { ApolloClient, useQuery } from '@apollo/client';
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 import { REMOVE_LOCATION } from '../../utils/mutations'
+import { ADD_LOCATION } from '../../utils/mutations'
+import Auth from '../../utils/auth'
+import { Link } from 'react-router-dom'
 
 /*
 import {KANSAS} from '../../assets/kansas.jpg'
@@ -30,7 +34,6 @@ const SearchableMap = () => {
     zoom: 3.5,
     transitionDuration: 100,
   });
-
 
   const [searchResultLayer, setSearchResult] = useState(null);
   const mapRef = useRef();
@@ -79,6 +82,9 @@ const SearchableMap = () => {
     [dataPins]
   );
 
+  
+
+
   const handleAddClick = (e) => {
     console.log(e)
     const [long, lat] = e.lngLat;
@@ -86,15 +92,17 @@ const SearchableMap = () => {
       lat,
       long
     });
+
   };
-  const [RemoveLocation, {error}] = useMutation(REMOVE_LOCATION, {
-    update(cache, { data: {removeLocation}}) {
+  
+  const [RemoveLocation, { error }] = useMutation(REMOVE_LOCATION, {
+    update(cache, { data: { removeLocation } }) {
       try {
         cache.writeQuery({
           query: QUERY_ME,
-          data: {me: removeLocation}
+          data: { me: removeLocation }
         })
-      } catch(e) {
+      } catch (e) {
         console.errore(e)
       }
     }
@@ -102,8 +110,8 @@ const SearchableMap = () => {
 
   const handleRemoveLocation = async (locationId) => {
     try {
-      const {data} = await RemoveLocation({
-        variables: {locationId}
+      const { data } = await RemoveLocation({
+        variables: { locationId }
       })
       window.location.reload()
     } catch (err) {
@@ -120,7 +128,6 @@ const SearchableMap = () => {
       height='100vh'
       dragPan={true}
       onViewportChange={setViewPort}
-      onDblClick={handleAddClick}
       mapboxApiAccessToken={Geocoder.accessToken}
     >
 
@@ -153,30 +160,6 @@ const SearchableMap = () => {
         position='top-left'
       />
 
-
-
-      {/* This works, but need to hide it for now until I get the secondary popup working - EM */}
-
-
-      {/*TODO: NEED TO FINISH THIS UP FOR THE FORM -- EM  */}
-      {/* form for adding a pin */}
-      {newPlace && <Popup className='popup-newPlace' longitude={newPlace.long} latitude={newPlace.lat}
-        anchor="bottom"
-        closeButton={true}
-        closeOnClick={false}
-        onClose={() => setNewPlace(false)}>
-        <div className='add-pin'>
-          <form className='pinForm' action="">
-            <label htmlFor="">Pin Name</label>
-            <input type="text" placeholder='Enter a pin name.' />
-            <label htmlFor="">Pin Description</label>
-            <input type="text" placeholder='Enter a description.' />
-            <label htmlFor="">Leave a Review</label>
-            <input type="text" placeholder='Leave a star rating.' />
-            <button className='submitBtn' type='submit'>Add pin to map!</button>
-          </form>
-        </div>
-      </Popup>}
 
       <NavigationControl className='navcontrol' />
       <ScaleControl className='scalecontrol' />
