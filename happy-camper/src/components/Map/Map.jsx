@@ -169,4 +169,6 @@ const SearchableMap = () => {
 };
 {/* <DeckGL {...viewport} layers={[searchResultLayer]} /> */ }
 {/* </div> */ }
+
+
 export default SearchableMap;
